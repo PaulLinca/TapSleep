@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import kotlin.random.Random
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,6 +48,15 @@ import com.linca.tapsleep.ui.theme.LavenderPale
 import com.linca.tapsleep.ui.theme.Deep
 import com.linca.tapsleep.ui.theme.MoonGlow
 
+private val calmingPhrases = listOf(
+    "Rest easy.",
+    "Unwind.",
+    "Breathe slow.",
+    "Settle in.",
+    "Wind down.",
+    "Be still."
+)
+
 private val SoundBtnBg = Deep.copy(alpha = 0.6f)
 private val SoundBtnBorder = MoonGlow.copy(alpha = 0.4f)
 private val SoundBtnText = MoonGlow
@@ -54,6 +64,7 @@ private val SoundBtnText = MoonGlow
 @Composable
 fun MainScreen(onSoundClick: (Sound) -> Unit = {}, onBlendClick: () -> Unit = {}) {
     var selectedIndex by remember { mutableStateOf(-1) }
+    val phrase = remember { calmingPhrases[Random.nextInt(calmingPhrases.size)] }
 
     Box(modifier = Modifier.fillMaxSize()) {
         StarfieldBackground(Modifier.fillMaxSize())
@@ -71,7 +82,7 @@ fun MainScreen(onSoundClick: (Sound) -> Unit = {}, onBlendClick: () -> Unit = {}
         Spacer(Modifier.weight(0.5f))
 
         Text(
-            "Tonight.",
+            phrase,
             style = MaterialTheme.typography.headlineLarge,
             color = MoonGlow,
         )
