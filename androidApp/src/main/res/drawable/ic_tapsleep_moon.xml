@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- TapSleep moon mark — mirrors the brand identity SVG (64×64 viewBox) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+
+    <path
+        android:pathData="M38,12 C27.5,12 19,20.5 19,31 C19,41.5 27.5,50 38,50 C32,46 27,39 27,31 C27,23 32,16 38,12 Z"
+        android:fillColor="#9B8FC4" />
+
+</vector>
