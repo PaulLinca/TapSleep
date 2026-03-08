@@ -53,7 +53,7 @@ private val SoundBtnBorder = MoonGlow.copy(alpha = 0.5f)
 private val SoundBtnText = MoonGlow.copy(alpha = 0.5f)
 
 @Composable
-fun MainScreen(onSoundClick: (Sound) -> Unit = {}) {
+fun MainScreen(onSoundClick: (Sound) -> Unit = {}, onBlendClick: () -> Unit = {}) {
     var selectedIndex by remember { mutableStateOf(-1) }
 
     Column(
@@ -113,7 +113,7 @@ fun MainScreen(onSoundClick: (Sound) -> Unit = {}) {
                 .clip(RoundedCornerShape(25.dp))
                 .background(SoundBtnBg)
                 .border(1.dp, MoonGlow.copy(alpha = 0.5f), RoundedCornerShape(25.dp))
-                .clickable { },
+                .clickable(onClick = onBlendClick),
             contentAlignment = Alignment.Center,
         ) {
             Text(

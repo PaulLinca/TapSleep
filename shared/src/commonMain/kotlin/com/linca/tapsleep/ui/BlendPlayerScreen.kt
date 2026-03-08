@@ -11,8 +11,10 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -49,42 +51,42 @@ import com.linca.tapsleep.ui.theme.MoonGlow
 import com.linca.tapsleep.ui.theme.Night
 import kotlinx.coroutines.delay
 
-private val OrbCenter = Color(0x669B8FC4)
-private val OrbEdge = Color(0x266B7DB3)
-private val OrbBorder = Color(0x4D9B8FC4)
+private val BlendOrbCenter = Color(0x669B8FC4)
+private val BlendOrbEdge = Color(0x266B7DB3)
+private val BlendOrbBorder = Color(0x4D9B8FC4)
 
 @Composable
-fun PlayerScreen(sound: Sound, onBack: () -> Unit) {
-    val audioPlayer = rememberSoundPlayer()
+fun BlendPlayerScreen(sounds: List<Sound>, onBack: () -> Unit) {
+    // Always create 3 players — only use as many as we have sounds
+    val p0 = rememberSoundPlayer()
+    val p1 = rememberSoundPlayer()
+    val p2 = rememberSoundPlayer()
+    val players = remember(sounds) { listOf(p0, p1, p2).take(sounds.size) }
+
     val preset by remember { mutableStateOf(TimerPreset.MIN_45) }
     var secondsLeft by remember { mutableStateOf(preset.totalSeconds) }
     var isPlaying by remember { mutableStateOf(true) }
     var hasStarted by remember { mutableStateOf(false) }
 
-    // Start on first play, pause/resume thereafter
     LaunchedEffect(isPlaying) {
         when {
             isPlaying && !hasStarted -> {
-                audioPlayer.play(sound.name.lowercase()); hasStarted = true
+                players.forEachIndexed { i, p -> p.play(sounds[i].name.lowercase()) }
+                hasStarted = true
             }
-
-            isPlaying -> audioPlayer.resume()
-            else -> audioPlayer.pause()
+            isPlaying -> players.forEach { it.resume() }
+            else -> players.forEach { it.pause() }
         }
     }
 
-    // Reset timer when preset changes
-    LaunchedEffect(preset) {
-        secondsLeft = preset.totalSeconds
-    }
+    LaunchedEffect(preset) { secondsLeft = preset.totalSeconds }
 
-    // Countdown — only ticks while playing and a timer is set
     LaunchedEffect(isPlaying) {
         while (isPlaying) {
             delay(1000L)
             val s = secondsLeft ?: continue
             if (s <= 0) {
-                audioPlayer.stop()
+                players.forEach { it.stop() }
                 onBack()
                 break
             }
@@ -92,27 +94,21 @@ fun PlayerScreen(sound: Sound, onBack: () -> Unit) {
         }
     }
 
-    // Stop audio when leaving screen (back gesture, system, etc.)
-    DisposableEffect(Unit) { onDispose { audioPlayer.stop() } }
+    DisposableEffect(Unit) { onDispose { players.forEach { it.stop() } } }
 
     // ── Breathing animation ───────────────────────────────────────────────────
-    val infiniteTransition = rememberInfiniteTransition(label = "orb")
+    val infiniteTransition = rememberInfiniteTransition(label = "blendOrb")
 
-    // Scale: 1.0 → 1.08 on a 4s breath cycle
     val breatheScale by infiniteTransition.animateFloat(
-        initialValue = 1.0f,
-        targetValue = 1.08f,
+        initialValue = 1.0f, targetValue = 1.08f,
         animationSpec = infiniteRepeatable(
             animation = tween(4000, easing = EaseInOutSine),
             repeatMode = RepeatMode.Reverse,
         ),
         label = "breathe",
     )
-
-    // Two glow rings phase-shifted by half a cycle (start at opposite ends)
     val glow1 by infiniteTransition.animateFloat(
-        initialValue = 0.0f,
-        targetValue = 0.20f,
+        initialValue = 0.0f, targetValue = 0.20f,
         animationSpec = infiniteRepeatable(
             animation = tween(3500, easing = EaseInOutSine),
             repeatMode = RepeatMode.Reverse,
@@ -120,8 +116,7 @@ fun PlayerScreen(sound: Sound, onBack: () -> Unit) {
         label = "glow1",
     )
     val glow2 by infiniteTransition.animateFloat(
-        initialValue = 0.20f,
-        targetValue = 0.0f,
+        initialValue = 0.20f, targetValue = 0.0f,
         animationSpec = infiniteRepeatable(
             animation = tween(3500, easing = EaseInOutSine),
             repeatMode = RepeatMode.Reverse,
@@ -154,6 +149,7 @@ fun PlayerScreen(sound: Sound, onBack: () -> Unit) {
             .safeDrawingPadding()
             .padding(horizontal = 24.dp, vertical = 20.dp),
     ) {
+        // ── Back arrow ────────────────────────────────────────────────────────
         Text(
             "←",
             style = MaterialTheme.typography.headlineMedium,
@@ -168,35 +164,48 @@ fun PlayerScreen(sound: Sound, onBack: () -> Unit) {
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            SoundLabel(sound)
+            // Sound icons in a row
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                sounds.forEach { sound ->
+                    Icon(
+                        imageVector = sound.icon,
+                        contentDescription = sound.name,
+                        tint = sound.tint.copy(alpha = 0.85f),
+                        modifier = Modifier.size(28.dp),
+                    )
+                }
+            }
+            Spacer(Modifier.height(8.dp))
+            Text(
+                sounds.joinToString(" · ") { it.name },
+                style = MaterialTheme.typography.headlineSmall.copy(fontStyle = FontStyle.Italic),
+                color = MoonGlow,
+            )
 
             Spacer(Modifier.height(70.dp))
 
             Box(
                 contentAlignment = Alignment.Center,
             ) {
-                // Outer glow ring (phase 2)
                 Box(
                     modifier = Modifier
                         .size(230.dp)
                         .clip(CircleShape)
-                        .border(1.dp, OrbBorder.copy(alpha = glowAlpha2), CircleShape),
+                        .border(1.dp, BlendOrbBorder.copy(alpha = glowAlpha2), CircleShape),
                 )
-                // Inner glow ring (phase 1)
                 Box(
                     modifier = Modifier
                         .size(198.dp)
                         .clip(CircleShape)
-                        .border(1.dp, OrbBorder.copy(alpha = glowAlpha1), CircleShape),
+                        .border(1.dp, BlendOrbBorder.copy(alpha = glowAlpha1), CircleShape),
                 )
-                // Orb — scales with breathing
                 Box(
                     modifier = Modifier
                         .size(160.dp)
                         .graphicsLayer { scaleX = orbScale; scaleY = orbScale }
                         .clip(CircleShape)
-                        .background(Brush.radialGradient(colors = listOf(OrbCenter, OrbEdge)))
-                        .border(1.dp, OrbBorder, CircleShape)
+                        .background(Brush.radialGradient(colors = listOf(BlendOrbCenter, BlendOrbEdge)))
+                        .border(1.dp, BlendOrbBorder, CircleShape)
                         .clickable { isPlaying = !isPlaying },
                     contentAlignment = Alignment.Center,
                 ) {
@@ -223,6 +232,7 @@ fun PlayerScreen(sound: Sound, onBack: () -> Unit) {
 
             Spacer(Modifier.height(24.dp))
 
+
             Text(
                 timerDisplay,
                 style = MaterialTheme.typography.bodyLarge.copy(
@@ -238,22 +248,7 @@ fun PlayerScreen(sound: Sound, onBack: () -> Unit) {
                 style = MaterialTheme.typography.labelLarge,
                 color = Dusk,
             )
+            Spacer(Modifier.height(8.dp))
         }
     }
-}
-
-@Composable
-private fun SoundLabel(sound: Sound) {
-    Icon(
-        imageVector = sound.icon,
-        contentDescription = sound.name,
-        tint = sound.tint.copy(alpha = 0.85f),
-        modifier = Modifier.size(36.dp),
-    )
-    Spacer(Modifier.height(8.dp))
-    Text(
-        sound.name,
-        style = MaterialTheme.typography.headlineSmall.copy(fontStyle = FontStyle.Italic),
-        color = MoonGlow,
-    )
 }
