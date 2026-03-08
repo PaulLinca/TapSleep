@@ -36,6 +36,8 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+            implementation("org.jetbrains.compose.material:material-icons-extended:1.6.11")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

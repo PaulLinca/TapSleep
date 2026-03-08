@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir -p /Users/ptudor01/AndroidStudioProjects/TapSleep/shared/src/commonMain/kotlin/com/linca/tapsleep/ui/theme && mkdir -p /Users/ptudor01/AndroidStudioProjects/TapSleep/shared/src/commonMain/composeResources/font && mkdir -p /Users/ptudor01/AndroidStudioProjects/TapSleep/androidApp/src/main/res/drawable)"
+      "Bash(mkdir -p /Users/ptudor01/AndroidStudioProjects/TapSleep/shared/src/commonMain/kotlin/com/linca/tapsleep/ui/theme && mkdir -p /Users/ptudor01/AndroidStudioProjects/TapSleep/shared/src/commonMain/composeResources/font && mkdir -p /Users/ptudor01/AndroidStudioProjects/TapSleep/androidApp/src/main/res/drawable)",
+      "mcp__ide__getDiagnostics"
     ]
   }
 }

@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.scale
-import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
@@ -51,6 +50,14 @@ private val moonPath = Path().apply {
     close()
 }
 
+// Stars from brand identity (64×64 viewBox): cx, cy, radius, alpha
+private val starData = listOf(
+    floatArrayOf(46f, 18f, 1.5f, 0.80f),
+    floatArrayOf(52f, 28f, 1.0f, 0.60f),
+    floatArrayOf(49f, 38f, 1.2f, 0.50f),
+    floatArrayOf(42f, 13f, 0.9f, 0.50f),
+)
+
 private fun DrawScope.drawMoon(brush: Brush, sizePx: Float) {
     val scaleFactor = sizePx / 64f
     scale(scaleFactor, pivot = Offset.Zero) {
@@ -58,13 +65,24 @@ private fun DrawScope.drawMoon(brush: Brush, sizePx: Float) {
     }
 }
 
+private fun DrawScope.drawStars(color: Color, sizePx: Float) {
+    val s = sizePx / 64f
+    for ((cx, cy, r, alpha) in starData) {
+        drawCircle(
+            color = color.copy(alpha = alpha),
+            radius = r * s,
+            center = Offset(cx * s, cy * s),
+        )
+    }
+}
+
 @Composable
 fun TapSleepLogoMark(
     modifier: Modifier = Modifier,
     size: Dp = 48.dp,
-    // Gradient from Lavender → Dusk, matching the brand identity glow
     startColor: Color = Lavender,
     endColor: Color = Dusk,
+    starColor: Color = Moon,
 ) {
     Canvas(modifier = modifier.size(size)) {
         val brush = Brush.linearGradient(
@@ -73,6 +91,7 @@ fun TapSleepLogoMark(
             end = Offset(this.size.width * 0.7f, this.size.height),
         )
         drawMoon(brush, this.size.width)
+        drawStars(starColor, this.size.width)
     }
 }
 
@@ -115,7 +134,6 @@ fun TapSleepLogo(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         TapSleepLogoMark(size = iconSize)
-        Spacer(Modifier.width(12.dp))
         TapSleepWordmark(
             fontSize = fontSize,
             tapColor = tapColor,
@@ -124,7 +142,6 @@ fun TapSleepLogo(
     }
 }
 
-// ─── Stacked lockup (icon over wordmark + tagline) ────────────────────────────
 
 @Composable
 fun TapSleepLogoStacked(
