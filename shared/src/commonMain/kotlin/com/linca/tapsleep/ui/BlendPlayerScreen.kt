@@ -149,16 +149,7 @@ fun BlendPlayerScreen(sounds: List<Sound>, onBack: () -> Unit) {
                 .safeDrawingPadding()
                 .padding(horizontal = 24.dp, vertical = 20.dp),
         ) {
-        // ── Back arrow ────────────────────────────────────────────────────────
-        Text(
-            "←",
-            style = MaterialTheme.typography.headlineMedium,
-            color = Dusk,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .clickable(onClick = onBack)
-                .padding(vertical = 8.dp, horizontal = 4.dp),
-        )
+        BackButton(onClick = onBack, modifier = Modifier.align(Alignment.TopStart))
 
         Column(
             modifier = Modifier.align(Alignment.Center),

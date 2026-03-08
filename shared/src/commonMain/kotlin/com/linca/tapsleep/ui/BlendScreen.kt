@@ -91,15 +91,7 @@ fun BlendScreen(
 
         // ── Top bar ───────────────────────────────────────────────────────────
         Box(modifier = Modifier.fillMaxWidth()) {
-            Text(
-                "←",
-                style = MaterialTheme.typography.headlineMedium,
-                color = Dusk,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .clickable(onClick = onBack)
-                    .padding(vertical = 8.dp, horizontal = 4.dp),
-            )
+            BackButton(onClick = onBack, modifier = Modifier.align(Alignment.CenterStart))
         }
 
         Spacer(Modifier.height(24.dp))

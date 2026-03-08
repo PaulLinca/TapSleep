@@ -6,7 +6,8 @@
       "WebFetch(domain:)",
       "Bash(./gradlew :shared:compileKotlinAndroid 2>&1 | tail -30)",
       "Bash(./gradlew :shared:compileDebugKotlinAndroid 2>&1 | tail -40)",
-      "Bash(./gradlew :shared:compileDebugKotlinAndroid 2>&1 | tail -15)"
+      "Bash(./gradlew :shared:compileDebugKotlinAndroid 2>&1 | tail -15)",
+      "Bash(./gradlew :shared:compileDebugKotlinAndroid 2>&1 | tail -10)"
     ]
   }
 }
