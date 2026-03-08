@@ -168,7 +168,7 @@ fun PlayerLayout(
                         color = MoonGlow,
                     )
                 } else {
-                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(25.dp)) {
                         sounds.forEach { sound ->
                             Icon(
                                 imageVector = sound.icon,
