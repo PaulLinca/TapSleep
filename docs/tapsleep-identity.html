@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TapSleep — Brand Identity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --night: #0a0d1a;
+    --deep: #0d1220;
+    --midnight: #111827;
+    --indigo-dark: #1a1f3a;
+    --indigo: #2d3561;
+    --indigo-mid: #3d4a7a;
+    --slate: #4a5568;
+    --moon: #e8e4d8;
+    --moon-warm: #f0ead8;
+    --moon-glow: #c8c0a8;
+    --cream: #f5f0e8;
+    --mist: rgba(200,192,168,0.12);
+    --mist2: rgba(200,192,168,0.06);
+    --fog: rgba(200,192,168,0.04);
+    --sage: #8fa89a;
+    --lavender: #9b8fc4;
+    --lavender-pale: rgba(155,143,196,0.25);
+    --dusk: #6b7db3;
+    --aurora: #7eb8c4;
+    --aurora-pale: rgba(126,184,196,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--night);
+    color: var(--moon);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ─── STAR FIELD ─── */
+  .starfield {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    animation: twinkle var(--dur, 4s) ease-in-out infinite var(--delay, 0s);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--min-op, 0.2); transform: scale(1); }
+    50% { opacity: var(--max-op, 0.8); transform: scale(1.3); }
+  }
+
+  /* ─── AMBIENT GLOW ─── */
+  .ambient {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .ambient::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: 30%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(155,143,196,0.08) 0%, transparent 70%);
+    animation: drift1 20s ease-in-out infinite;
+  }
+
+  .ambient::after {
+    content: '';
+    position: absolute;
+    bottom: 10%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(126,184,196,0.07) 0%, transparent 70%);
+    animation: drift2 25s ease-in-out infinite;
+  }
+
+  @keyframes drift1 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-40px, 30px); }
+  }
+
+  @keyframes drift2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(30px, -40px); }
+  }
+
+  /* ─── LAYOUT ─── */
+  .content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  section {
+    padding: 100px 0;
+    border-bottom: 1px solid rgba(200,192,168,0.06);
+  }
+
+  section:last-child { border-bottom: none; }
+
+  /* ─── SECTION LABELS ─── */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dusk);
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: var(--dusk);
+    opacity: 0.4;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dusk);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.3s;
+  }
+
+  .hero-lockup {
+    display: flex;
+    align-items: baseline;
+    gap: 28px;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.6s;
+  }
+
+  /* THE LOGO MARK */
+  .logo-mark {
+    width: 64px;
+    height: 64px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .logo-mark svg {
+    width: 64px;
+    height: 64px;
+  }
+
+  .hero-wordmark {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(72px, 10vw, 120px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+    color: var(--moon);
+  }
+
+  .hero-wordmark em {
+    font-style: italic;
+    color: var(--moon-glow);
+    font-weight: 300;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(200,192,168,0.55);
+    margin-bottom: 60px;
+    max-width: 400px;
+    line-height: 1.5;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.9s;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 48px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1.2s;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .hero-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dusk);
+    opacity: 0.6;
+  }
+
+  .hero-meta-item .value {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--moon-glow);
+  }
+
+  /* Moon decoration */
+  .hero-moon {
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 500px;
+    height: 500px;
+    opacity: 0;
+    animation: fadeIn 2s ease forwards 0.5s;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ─── LOGO SECTION ─── */
+  .logo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 40px;
+  }
+
+  .logo-cell {
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    position: relative;
+  }
+
+  .logo-cell.dark-bg { background: var(--deep); }
+  .logo-cell.darker-bg { background: var(--night); }
+  .logo-cell.light-bg { background: var(--moon-warm); }
+  .logo-cell.indigo-bg { background: var(--indigo-dark); }
+
+  .logo-cell-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    opacity: 0.35;
+  }
+
+  .logo-cell.light-bg .logo-cell-label { color: #1a1f3a; }
+
+  /* Logo variants */
+  .logo-full {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .logo-full .wordmark {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+  }
+
+  .logo-full .wordmark .tap { font-size: 36px; color: var(--moon); }
+  .logo-full .wordmark .sleep { font-size: 36px; font-style: italic; color: var(--moon-glow); }
+  .logo-full.dark .wordmark .tap { color: var(--indigo-dark); }
+  .logo-full.dark .wordmark .sleep { color: var(--indigo-mid); }
+
+  .logo-stacked {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-stacked .wordmark {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    font-size: 28px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .logo-stacked .tagline-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dusk);
+  }
+
+  /* Icon mark sizes */
+  .icon-sm svg { width: 32px; height: 32px; }
+  .icon-md svg { width: 56px; height: 56px; }
+  .icon-lg svg { width: 80px; height: 80px; }
+  .icon-xl svg { width: 120px; height: 120px; }
+
+  /* ─── APP ICON ─── */
+  .app-icon-showcase {
+    display: flex;
+    align-items: flex-end;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .app-icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .app-icon-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dusk);
+    opacity: 0.6;
+  }
+
+  .app-icon-shell {
+    background: linear-gradient(145deg, #12172e, #0d1220);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(200,192,168,0.1);
+  }
+
+  .app-icon-shell.r-xl { border-radius: 28px; width: 120px; height: 120px; }
+  .app-icon-shell.r-lg { border-radius: 20px; width: 80px; height: 80px; }
+  .app-icon-shell.r-md { border-radius: 14px; width: 58px; height: 58px; }
+  .app-icon-shell.r-sm { border-radius: 10px; width: 40px; height: 40px; }
+
+  .app-icon-shell::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 40% 30%, rgba(155,143,196,0.15) 0%, transparent 60%);
+  }
+
+  /* ─── COLOR PALETTE ─── */
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 2px;
+  }
+
+  .swatch {
+    aspect-ratio: 1;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .swatch:hover { transform: translateY(-4px); z-index: 1; }
+
+  .swatch-color {
+    width: 100%;
+    height: 70%;
+  }
+
+  .swatch-info {
+    padding: 10px 12px;
+    background: var(--deep);
+  }
+
+  .swatch-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--moon);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .swatch-hex {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--dusk);
+    display: block;
+  }
+
+  /* ─── TYPOGRAPHY ─── */
+  .type-specimen {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .type-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 120px;
+    align-items: baseline;
+    padding: 32px 40px;
+    background: var(--deep);
+    gap: 40px;
+    transition: background 0.2s;
+  }
+
+  .type-row:hover { background: var(--indigo-dark); }
+
+  .type-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .type-meta .name {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dusk);
+  }
+
+  .type-meta .usage {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(107,125,179,0.5);
+  }
+
+  .type-sample { line-height: 1.1; }
+  .type-size { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(107,125,179,0.5); text-align: right; }
+
+  /* ─── TONE & VOICE ─── */
+  .voice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .voice-card {
+    padding: 48px;
+    background: var(--deep);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .voice-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--indigo-mid), transparent);
+  }
+
+  .voice-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dusk);
+    margin-bottom: 24px;
+  }
+
+  .voice-card-main {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--moon);
+    margin-bottom: 20px;
+  }
+
+  .voice-card-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(200,192,168,0.4);
+    line-height: 1.7;
+  }
+
+  /* ─── UI SCREENS ─── */
+  .screens-showcase {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    overflow-x: auto;
+    padding-bottom: 20px;
+  }
+
+  .phone-frame {
+    flex-shrink: 0;
+    width: 220px;
+    background: #080a14;
+    border-radius: 36px;
+    padding: 20px 12px;
+    box-shadow:
+      0 0 0 1px rgba(200,192,168,0.1),
+      0 40px 80px rgba(0,0,0,0.7),
+      inset 0 1px 0 rgba(200,192,168,0.08);
+    position: relative;
+  }
+
+  .phone-notch {
+    width: 60px;
+    height: 10px;
+    background: #080a14;
+    border-radius: 0 0 12px 12px;
+    margin: 0 auto 16px;
+    position: relative;
+    z-index: 10;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+  }
+
+  .phone-screen {
+    background: var(--night);
+    border-radius: 24px;
+    min-height: 400px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .screen-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dusk);
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  /* Screen 1 — Sound Picker */
+  .screen-picker {
+    padding: 20px 14px;
+  }
+
+  .screen-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: rgba(200,192,168,0.4);
+  }
+
+  .screen-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--moon);
+    margin-bottom: 4px;
+  }
+
+  .screen-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dusk);
+    margin-bottom: 16px;
+  }
+
+  .sound-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .sound-btn {
+    aspect-ratio: 1;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sound-btn.inactive { background: rgba(200,192,168,0.05); border: 1px solid rgba(200,192,168,0.08); }
+  .sound-btn.active {
+    background: linear-gradient(145deg, rgba(155,143,196,0.2), rgba(126,184,196,0.1));
+    border: 1px solid rgba(155,143,196,0.35);
+    box-shadow: 0 0 16px rgba(155,143,196,0.15);
+  }
+
+  .sound-emoji { font-size: 18px; }
+  .sound-name { font-family: 'DM Mono', monospace; font-size: 6px; letter-spacing: 0.15em; color: rgba(200,192,168,0.5); text-transform: uppercase; }
+  .sound-btn.active .sound-name { color: var(--lavender); }
+
+  /* Screen 2 — Player */
+  .screen-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 14px;
+    min-height: 400px;
+    position: relative;
+  }
+
+  .player-back {
+    align-self: flex-start;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--dusk);
+    margin-bottom: 20px;
+  }
+
+  .player-sound-name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--moon-glow);
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .player-timer-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--dusk);
+    margin-bottom: 32px;
+    letter-spacing: 0.2em;
+  }
+
+  .play-orb {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, rgba(155,143,196,0.4), rgba(107,125,179,0.15));
+    border: 1px solid rgba(155,143,196,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    box-shadow: 0 0 40px rgba(155,143,196,0.15), 0 0 80px rgba(155,143,196,0.05);
+    animation: pulse 4s ease-in-out infinite;
+    position: relative;
+  }
+
+  .play-orb::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(155,143,196,0.1);
+    animation: pulse-ring 4s ease-in-out infinite 0.5s;
+  }
+
+  .play-orb::after {
+    content: '';
+    position: absolute;
+    inset: -18px;
+    border-radius: 50%;
+    border: 1px solid rgba(155,143,196,0.05);
+    animation: pulse-ring 4s ease-in-out infinite 1s;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 30px rgba(155,143,196,0.12), 0 0 60px rgba(155,143,196,0.04); }
+    50% { box-shadow: 0 0 50px rgba(155,143,196,0.22), 0 0 90px rgba(155,143,196,0.08); }
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.2; transform: scale(1.02); }
+  }
+
+  .stop-icon {
+    width: 22px;
+    height: 22px;
+    background: var(--moon);
+    border-radius: 4px;
+    opacity: 0.85;
+  }
+
+  .player-timer-display {
+    font-family: 'DM Mono', monospace;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--moon);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+
+  .player-fade-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 0.25em;
+    color: var(--dusk);
+    text-transform: uppercase;
+  }
+
+  /* Screen 3 — Mixer */
+  .screen-mixer { padding: 20px 14px; }
+
+  .mix-slots {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .mix-slot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200,192,168,0.05);
+    border: 1px solid rgba(200,192,168,0.08);
+    border-radius: 10px;
+    padding: 8px 10px;
+  }
+
+  .mix-slot.filled {
+    background: linear-gradient(90deg, rgba(155,143,196,0.12), rgba(126,184,196,0.06));
+    border-color: rgba(155,143,196,0.2);
+  }
+
+  .mix-slot-icon { font-size: 14px; }
+  .mix-slot-name { font-family: 'DM Mono', monospace; font-size: 8px; color: rgba(200,192,168,0.6); flex: 1; }
+  .mix-slot-vol {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+  }
+
+  .vol-bar {
+    width: 2px;
+    border-radius: 1px;
+    background: var(--lavender);
+    opacity: 0.5;
+  }
+
+  .vol-bar.on { opacity: 1; }
+
+  .mix-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(200,192,168,0.03);
+    border: 1px dashed rgba(200,192,168,0.1);
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .mix-empty-text { font-family: 'DM Mono', monospace; font-size: 7px; color: rgba(200,192,168,0.2); letter-spacing: 0.15em; }
+
+  .mix-play-btn {
+    width: 100%;
+    background: linear-gradient(135deg, rgba(155,143,196,0.2), rgba(107,125,179,0.15));
+    border: 1px solid rgba(155,143,196,0.3);
+    border-radius: 12px;
+    padding: 12px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--moon);
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  /* ─── ICONOGRAPHY ─── */
+  .icon-set {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .icon-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .icon-chip-bg {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    background: rgba(200,192,168,0.05);
+    border: 1px solid rgba(200,192,168,0.08);
+    transition: all 0.2s;
+  }
+
+  .icon-chip:hover .icon-chip-bg {
+    background: rgba(155,143,196,0.12);
+    border-color: rgba(155,143,196,0.25);
+    transform: translateY(-2px);
+  }
+
+  .icon-chip-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dusk);
+  }
+
+  /* ─── MOTION PRINCIPLES ─── */
+  .motion-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .motion-card {
+    padding: 48px 40px;
+    background: var(--deep);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .motion-demo {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .motion-orb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, var(--lavender), var(--dusk));
+  }
+
+  .motion-orb.breathe { animation: breathe 4s ease-in-out infinite; }
+  .motion-orb.drift { animation: drift-x 6s ease-in-out infinite; width: 12px; height: 12px; }
+  .motion-orb.fade-demo { animation: fade-loop 3s ease-in-out infinite; }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.6); opacity: 1; }
+  }
+
+  @keyframes drift-x {
+    0%, 100% { transform: translateX(-20px); opacity: 0.3; }
+    50% { transform: translateX(20px); opacity: 0.9; }
+  }
+
+  @keyframes fade-loop {
+    0% { opacity: 0; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1); }
+    80% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.8); }
+  }
+
+  .motion-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--moon);
+  }
+
+  .motion-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(200,192,168,0.35);
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── COPYWRITING ─── */
+  .copy-examples {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .copy-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 2px;
+  }
+
+  .copy-cell {
+    padding: 24px 32px;
+    background: var(--deep);
+  }
+
+  .copy-cell.context {
+    display: flex;
+    align-items: center;
+    background: var(--indigo-dark);
+  }
+
+  .copy-cell .ctx-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dusk);
+  }
+
+  .copy-cell.bad { border-top: 1px solid rgba(200,60,60,0.15); }
+  .copy-cell.good { border-top: 1px solid rgba(100,200,150,0.15); }
+
+  .copy-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .copy-tag.bad-tag { color: rgba(200,80,80,0.7); }
+  .copy-tag.good-tag { color: rgba(100,190,140,0.7); }
+
+  .copy-text {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.4;
+  }
+
+  .copy-text.bad { color: rgba(200,192,168,0.35); text-decoration: line-through; text-decoration-color: rgba(200,80,80,0.3); }
+  .copy-text.good { color: var(--moon); }
+
+  /* ─── MARKETING MATERIALS ─── */
+  .marketing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .marketing-card {
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .marketing-card.app-store {
+    background: linear-gradient(160deg, #0d1220 0%, #111827 100%);
+  }
+
+  .marketing-card.social {
+    background: linear-gradient(160deg, #0a0d1a 0%, #1a1f3a 100%);
+  }
+
+  .marketing-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(155,143,196,0.12), transparent 70%);
+  }
+
+  .mkt-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dusk);
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .mkt-headline {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 38px;
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--moon);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .mkt-headline em { font-style: italic; color: var(--moon-glow); }
+
+  .mkt-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    line-height: 1.7;
+    color: rgba(200,192,168,0.4);
+    max-width: 320px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .mkt-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(155,143,196,0.15);
+    border: 1px solid rgba(155,143,196,0.25);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--lavender);
+    letter-spacing: 0.15em;
+    position: relative;
+    z-index: 1;
+    margin-top: 24px;
+    width: fit-content;
+  }
+
+  /* ─── DO / DON'T ─── */
+  .dont-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .principle-card {
+    padding: 48px;
+    background: var(--deep);
+  }
+
+  .principle-card.do-card { border-top: 2px solid rgba(100,190,140,0.4); }
+  .principle-card.dont-card { border-top: 2px solid rgba(200,80,80,0.3); }
+
+  .principle-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .principle-label.do { color: rgba(100,190,140,0.7); }
+  .principle-label.dont { color: rgba(200,80,80,0.5); }
+
+  .principle-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .principle-list li {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--moon);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .principle-list li::before {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-size: 12px;
+  }
+
+  .do-card .principle-list li::before { content: '✦'; color: rgba(100,190,140,0.6); }
+  .dont-card .principle-list li::before { content: '✕'; color: rgba(200,80,80,0.4); }
+
+  /* ─── FOOTER ─── */
+  .brand-footer {
+    padding: 80px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(200,192,168,0.06);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 24px;
+    font-weight: 300;
+  }
+
+  .footer-logo em { font-style: italic; color: var(--moon-glow); }
+
+  .footer-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(200,192,168,0.2);
+    letter-spacing: 0.2em;
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: var(--night); }
+  ::-webkit-scrollbar-thumb { background: var(--indigo); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="starfield" id="starfield"></div>
+<div class="ambient"></div>
+
+<div class="content">
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="hero-eyebrow">Brand Identity System — 2026</div>
+
+    <div class="hero-lockup">
+      <div class="logo-mark">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="moonGrad" cx="40%" cy="35%" r="60%">
+              <stop offset="0%" stop-color="#e8e4d8" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#c8c0a8" stop-opacity="0.6"/>
+            </radialGradient>
+            <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#9b8fc4" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#9b8fc4" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- Glow halo -->
+          <circle cx="32" cy="32" r="28" fill="url(#glowGrad)"/>
+          <!-- Moon crescent -->
+          <path d="M38 12C27.5 12 19 20.5 19 31C19 41.5 27.5 50 38 50C32 46 27 39 27 31C27 23 32 16 38 12Z" fill="url(#moonGrad)" filter="url(#glow)"/>
+          <!-- Stars -->
+          <circle cx="46" cy="18" r="1.5" fill="#e8e4d8" opacity="0.8"/>
+          <circle cx="52" cy="28" r="1" fill="#e8e4d8" opacity="0.6"/>
+          <circle cx="49" cy="38" r="1.2" fill="#e8e4d8" opacity="0.5"/>
+          <circle cx="43" cy="14" r="0.8" fill="#e8e4d8" opacity="0.4"/>
+        </svg>
+      </div>
+
+      <div class="hero-wordmark">Tap<em>Sleep</em></div>
+    </div>
+
+    <div class="hero-tagline">Press play. Close your eyes.<br>Everything else can wait.</div>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="label">Category</span>
+        <span class="value">Sleep & Wellness</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Platform</span>
+        <span class="value">iOS & Android</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Positioning</span>
+        <span class="value">Radically Simple</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Price</span>
+        <span class="value">$1.99 once. Forever.</span>
+      </div>
+    </div>
+
+    <!-- Moon SVG decoration -->
+    <div class="hero-moon">
+      <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="bigMoonGrad" cx="38%" cy="35%" r="55%">
+            <stop offset="0%" stop-color="#e8e4d8" stop-opacity="0.08"/>
+            <stop offset="60%" stop-color="#c8c0a8" stop-opacity="0.04"/>
+            <stop offset="100%" stop-color="#9b8fc4" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="bigMoonCore" cx="38%" cy="35%" r="50%">
+            <stop offset="0%" stop-color="#e8e4d8" stop-opacity="0.12"/>
+            <stop offset="100%" stop-color="#c8c0a8" stop-opacity="0.03"/>
+          </radialGradient>
+        </defs>
+        <!-- Outer glow rings -->
+        <circle cx="250" cy="250" r="240" stroke="rgba(200,192,168,0.03)" stroke-width="1"/>
+        <circle cx="250" cy="250" r="200" stroke="rgba(200,192,168,0.04)" stroke-width="1"/>
+        <circle cx="250" cy="250" r="160" fill="url(#bigMoonGrad)"/>
+        <!-- Crescent body -->
+        <path d="M290 80C200 80 130 158 130 250C130 342 200 420 290 420C240 390 200 325 200 250C200 175 240 110 290 80Z" fill="url(#bigMoonCore)"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ═══ LOGO ═══ -->
+  <section>
+    <div class="section-label">01 — Logo System</div>
+
+    <div class="logo-grid">
+      <!-- Dark primary -->
+      <div class="logo-cell dark-bg">
+        <div class="logo-full">
+          <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
+            <defs>
+              <radialGradient id="lmg1" cx="40%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="#e8e4d8" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#c8c0a8" stop-opacity="0.6"/>
+              </radialGradient>
+            </defs>
+            <circle cx="32" cy="32" r="28" fill="rgba(155,143,196,0.08)"/>
+            <path d="M38 12C27.5 12 19 20.5 19 31C19 41.5 27.5 50 38 50C32 46 27 39 27 31C27 23 32 16 38 12Z" fill="url(#lmg1)"/>
+            <circle cx="46" cy="18" r="1.5" fill="#e8e4d8" opacity="0.8"/>
+            <circle cx="52" cy="28" r="1" fill="#e8e4d8" opacity="0.6"/>
+            <circle cx="49" cy="38" r="1.2" fill="#e8e4d8" opacity="0.5"/>
+          </svg>
+          <div class="wordmark">
+            <span class="tap">Tap</span><span class="sleep">Sleep</span>
+          </div>
+        </div>
+        <div class="logo-cell-label" style="color: rgba(200,192,168,0.3)">Primary / Dark</div>
+      </div>
+
+      <!-- Darker -->
+      <div class="logo-cell darker-bg">
+        <div class="logo-stacked">
+          <svg width="44" height="44" viewBox="0 0 64 64" fill="none">
+            <defs>
+              <radialGradient id="lmg2" cx="40%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="#e8e4d8"/>
+                <stop offset="100%" stop-color="#c8c0a8" stop-opacity="0.7"/>
+              </radialGradient>
+            </defs>
+            <path d="M38 12C27.5 12 19 20.5 19 31C19 41.5 27.5 50 38 50C32 46 27 39 27 31C27 23 32 16 38 12Z" fill="url(#lmg2)"/>
+            <circle cx="46" cy="18" r="1.5" fill="#e8e4d8" opacity="0.7"/>
+            <circle cx="52" cy="28" r="1" fill="#e8e4d8" opacity="0.5"/>
+          </svg>
+          <div class="wordmark" style="color: var(--moon); letter-spacing: 0.12em;">TAPSLEEP</div>
+          <div class="tagline-sub">Sleep sounds · No subscription</div>
+        </div>
+        <div class="logo-cell-label" style="color: rgba(200,192,168,0.3)">Stacked / Wordmark</div>
+      </div>
+
+      <!-- Light version -->
+      <div class="logo-cell light-bg">
+        <div class="logo-full dark">
+          <svg width="44" height="44" viewBox="0 0 64 64" fill="none">
+            <defs>
+              <radialGradient id="lmg3" cx="40%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="#2d3561"/>
+                <stop offset="100%" stop-color="#3d4a7a" stop-opacity="0.7"/>
+              </radialGradient>
+            </defs>
+            <path d="M38 12C27.5 12 19 20.5 19 31C19 41.5 27.5 50 38 50C32 46 27 39 27 31C27 23 32 16 38 12Z" fill="url(#lmg3)"/>
+            <circle cx="46" cy="18" r="1.5" fill="#2d3561" opacity="0.7"/>
+            <circle cx="52" cy="28" r="1" fill="#2d3561" opacity="0.5"/>
+          </svg>
+          <div class="wordmark dark">
+            <span class="tap" style="color: #1a1f3a; font-size:30px;">Tap</span><span class="sleep" style="color: #3d4a7a; font-size:30px; font-style:italic;">Sleep</span>
+          </div>
+        </div>
+        <div class="logo-cell-label" style="color: rgba(26,31,58,0.4);">Light Background</div>
+      </div>
+
+      <!-- Icon only -->
+      <div class="logo-cell indigo-bg">
+        <div style="display:flex; gap:32px; align-items:center;">
+          <div class="app-icon-shell r-xl">
+            <svg width="68" height="68" viewBox="0 0 64 64" fill="none">
+              <defs>
+                <radialGradient id="lmg4" cx="40%" cy="35%" r="60%">
+                  <stop offset="0%" stop-color="#e8e4d8" stop-opacity="0.95"/>
+                  <stop offset="100%" stop-color="#c8c0a8" stop-opacity="0.6"/>
+                </radialGradient>
+                <radialGradient id="halo4" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#9b8fc4" stop-opacity="0.2"/>
+                  <stop offset="100%" stop-color="#9b8fc4" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <circle cx="32" cy="32" r="30" fill="url(#halo4)"/>
+              <path d="M38 12C27.5 12 19 20.5 19 31C19 41.5 27.5 50 38 50C32 46 27 39 27 31C27 23 32 16 38 12Z" fill="url(#lmg4)"/>
+              <circle cx="46" cy="18" r="1.8" fill="#e8e4d8" opacity="0.9"/>
+              <circle cx="52" cy="27" r="1.1" fill="#e8e4d8" opacity="0.7"/>
+              <circle cx="50" cy="38" r="1.4" fill="#e8e4d8" opacity="0.6"/>
+              <circle cx="42" cy="13" r="0.9" fill="#e8e4d8" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="app-icon-shell r-lg">
+            <svg width="46" height="46" viewBox="0 0 64 64" fill="none">
+              <defs>
+                <radialGradient id="lmg5" cx="40%" cy="35%" r="60%">
+                  <stop offset="0%" stop-color="#e8e4d8"/>
+                  <stop offset="100%" stop-color="#c8c0a8" stop-opacity="0.6"/>
+                </radialGradient>
+              </defs>
+              <path d="M38 12C27.5 12 19 20.5 19 31C19 41.5 27.5 50 38 50C32 46 27 39 27 31C27 23 32 16 38 12Z" fill="url(#lmg5)"/>
+              <circle cx="46" cy="18" r="1.5" fill="#e8e4d8" opacity="0.8"/>
+              <circle cx="52" cy="27" r="1" fill="#e8e4d8" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="app-icon-shell r-md">
+            <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
+              <defs>
+                <radialGradient id="lmg6" cx="40%" cy="35%" r="60%">
+                  <stop offset="0%" stop-color="#e8e4d8"/>
+                  <stop offset="100%" stop-color="#c8c0a8" stop-opacity="0.7"/>
+                </radialGradient>
+              </defs>
+              <path d="M38 12C27.5 12 19 20.5 19 31C19 41.5 27.5 50 38 50C32 46 27 39 27 31C27 23 32 16 38 12Z" fill="url(#lmg6)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="logo-cell-label" style="color: rgba(200,192,168,0.3)">Icon Mark / App Icons</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ COLOR PALETTE ═══ -->
+  <section>
+    <div class="section-label">02 — Color Palette</div>
+
+    <div class="palette-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0a0d1a;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Night</span>
+          <span class="swatch-hex">#0a0d1a</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0d1220;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Deep</span>
+          <span class="swatch-hex">#0d1220</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1a1f3a;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Indigo Dark</span>
+          <span class="swatch-hex">#1a1f3a</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2d3561;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Indigo</span>
+          <span class="swatch-hex">#2d3561</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#9b8fc4;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Lavender</span>
+          <span class="swatch-hex">#9b8fc4</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#7eb8c4;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Aurora</span>
+          <span class="swatch-hex">#7eb8c4</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#c8c0a8;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Moon Glow</span>
+          <span class="swatch-hex">#c8c0a8</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#f0ead8;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Moonwarm</span>
+          <span class="swatch-hex">#f0ead8</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 40px; padding: 32px 40px; background: var(--deep);">
+      <p style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--dusk); line-height: 1.9; letter-spacing: 0.05em;">
+        The palette draws from a clear night sky over the sea. <strong style="color: var(--moon-glow);">Night & Deep</strong> are the primary canvas — heavy, restful, non-stimulating. <strong style="color: var(--lavender);">Lavender</strong> is the accent: soft, calm, associated psychologically with sleep and relaxation. <strong style="color: var(--aurora);">Aurora</strong> is used sparingly for interactive highlights. <strong style="color: var(--moon-warm);">Moon tones</strong> carry all readable text, warm rather than stark white to avoid stimulating the eye before sleep. No greens. No reds. No high-contrast whites.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ TYPOGRAPHY ═══ -->
+  <section>
+    <div class="section-label">03 — Typography</div>
+
+    <div class="type-specimen">
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="name">Cormorant Garamond</span>
+          <span class="usage">Display / Hero / Headings</span>
+        </div>
+        <div class="type-sample" style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 52px; font-weight: 300; color: var(--moon); line-height:1;">
+          Rest<em style="font-style:italic; color: var(--moon-glow);">fully.</em>
+        </div>
+        <span class="type-size">52px / Light 300</span>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="name">Cormorant Garamond</span>
+          <span class="usage">Section titles / Cards</span>
+        </div>
+        <div class="type-sample" style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 32px; font-weight: 300; color: var(--moon);">
+          Your sleep, your rules.
+        </div>
+        <span class="type-size">32px / Light 300</span>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="name">Cormorant Garamond Italic</span>
+          <span class="usage">Sound names / Quotes</span>
+        </div>
+        <div class="type-sample" style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 24px; font-weight: 300; font-style: italic; color: var(--moon-glow);">
+          Gentle Rain on Leaves
+        </div>
+        <span class="type-size">24px / Italic</span>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="name">DM Mono</span>
+          <span class="usage">Labels / UI / Meta / Code</span>
+        </div>
+        <div class="type-sample" style="font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 300; color: var(--dusk); letter-spacing: 0.2em;">
+          SLEEP TIMER · 45 MIN · FADE OUT
+        </div>
+        <span class="type-size">13px / Light 300</span>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="name">DM Mono</span>
+          <span class="usage">Timer display / Data</span>
+        </div>
+        <div class="type-sample" style="font-family: 'DM Mono', monospace; font-size: 40px; font-weight: 400; color: var(--moon); letter-spacing: 0.04em;">
+          42:17
+        </div>
+        <span class="type-size">40px / Regular</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 2px; padding: 32px 40px; background: var(--deep); display:flex; gap:80px;">
+      <div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; color:var(--dusk); text-transform:uppercase; margin-bottom:12px;">Why Cormorant Garamond</div>
+        <p style="font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:300; color:rgba(200,192,168,0.6); line-height:1.7; max-width:340px;">A serif with deep classical roots — it feels like candlelight, not fluorescence. Its thinness at display sizes reads as whispered, not shouted.</p>
+      </div>
+      <div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; color:var(--dusk); text-transform:uppercase; margin-bottom:12px;">Why DM Mono</div>
+        <p style="font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:300; color:rgba(200,192,168,0.6); line-height:1.7; max-width:340px;">Monospace creates precision and legibility for timer displays and UI labels. Its narrowness doesn't compete with the display font.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ APP SCREENS ═══ -->
+  <section>
+    <div class="section-label">04 — App UI Screens</div>
+
+    <div class="screens-showcase">
+      <!-- Screen 1: Sound Picker -->
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="screen-picker">
+            <div class="screen-status">
+              <span>9:41</span><span>⚡</span>
+            </div>
+            <div class="screen-title">Tonight.</div>
+            <div class="screen-subtitle">Choose a sound</div>
+            <div class="sound-grid">
+              <div class="sound-btn active">
+                <span class="sound-emoji">🌧</span>
+                <span class="sound-name">Rain</span>
+              </div>
+              <div class="sound-btn inactive">
+                <span class="sound-emoji">🌊</span>
+                <span class="sound-name">Ocean</span>
+              </div>
+              <div class="sound-btn inactive">
+                <span class="sound-emoji">🌲</span>
+                <span class="sound-name">Forest</span>
+              </div>
+              <div class="sound-btn inactive">
+                <span class="sound-emoji">🔥</span>
+                <span class="sound-name">Fire</span>
+              </div>
+              <div class="sound-btn inactive">
+                <span class="sound-emoji">💨</span>
+                <span class="sound-name">Wind</span>
+              </div>
+              <div class="sound-btn inactive">
+                <span class="sound-emoji">☕</span>
+                <span class="sound-name">Café</span>
+              </div>
+              <div class="sound-btn inactive">
+                <span class="sound-emoji">🌌</span>
+                <span class="sound-name">Space</span>
+              </div>
+              <div class="sound-btn inactive">
+                <span class="sound-emoji">🎵</span>
+                <span class="sound-name">Brown</span>
+              </div>
+              <div class="sound-btn inactive">
+                <span class="sound-emoji">🌙</span>
+                <span class="sound-name">Night</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">01 · Sound Picker</div>
+      </div>
+
+      <!-- Screen 2: Player -->
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="screen-player">
+            <div class="player-back">← back</div>
+            <div class="player-sound-name">Gentle Rain</div>
+            <div class="player-timer-text">Fading at 45 min</div>
+            <div class="play-orb">
+              <div class="stop-icon"></div>
+            </div>
+            <div class="player-timer-display">42:17</div>
+            <div class="player-fade-label">Until silence</div>
+          </div>
+        </div>
+        <div class="screen-label">02 · Now Playing</div>
+      </div>
+
+      <!-- Screen 3: Mixer -->
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="screen-mixer">
+            <div class="screen-status">
+              <span>9:41</span><span>⚡</span>
+            </div>
+            <div class="screen-title" style="font-size:18px; margin-bottom:4px;">Your Mix</div>
+            <div class="screen-subtitle" style="margin-bottom:14px;">Blend up to 3 sounds</div>
+            <div class="mix-slots">
+              <div class="mix-slot filled">
+                <span class="mix-slot-icon">🌧</span>
+                <span class="mix-slot-name">Rain</span>
+                <div class="mix-slot-vol">
+                  <div class="vol-bar on" style="height:14px;"></div>
+                  <div class="vol-bar on" style="height:10px;"></div>
+                  <div class="vol-bar on" style="height:8px;"></div>
+                  <div class="vol-bar on" style="height:12px;"></div>
+                  <div class="vol-bar" style="height:6px;"></div>
+                </div>
+              </div>
+              <div class="mix-slot filled">
+                <span class="mix-slot-icon">🔥</span>
+                <span class="mix-slot-name">Fire</span>
+                <div class="mix-slot-vol">
+                  <div class="vol-bar on" style="height:10px;"></div>
+                  <div class="vol-bar on" style="height:7px;"></div>
+                  <div class="vol-bar" style="height:14px;"></div>
+                  <div class="vol-bar" style="height:6px;"></div>
+                  <div class="vol-bar" style="height:9px;"></div>
+                </div>
+              </div>
+              <div class="mix-empty">
+                <span style="font-size:12px; opacity:0.3;">＋</span>
+                <span class="mix-empty-text">Add third sound</span>
+              </div>
+            </div>
+            <div class="mix-play-btn">Play this mix →</div>
+          </div>
+        </div>
+        <div class="screen-label">03 · Mix Builder</div>
+      </div>
+
+      <!-- Screen 4: Timer -->
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" style="padding:24px 16px; display:flex; flex-direction:column; gap:16px;">
+          <div class="screen-status">
+            <span>9:41</span><span>⚡</span>
+          </div>
+          <div style="font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--moon); font-weight:300;">Sleep Timer</div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.2em; color:var(--dusk); text-transform:uppercase; margin-bottom:4px;">Presets</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
+              <div style="padding:10px; background:rgba(155,143,196,0.15); border:1px solid rgba(155,143,196,0.3); border-radius:10px; text-align:center; font-family:'DM Mono',monospace; font-size:9px; color:var(--lavender);">20 min</div>
+              <div style="padding:10px; background:rgba(200,192,168,0.04); border:1px solid rgba(200,192,168,0.08); border-radius:10px; text-align:center; font-family:'DM Mono',monospace; font-size:9px; color:rgba(200,192,168,0.4);">30 min</div>
+              <div style="padding:10px; background:rgba(200,192,168,0.04); border:1px solid rgba(200,192,168,0.08); border-radius:10px; text-align:center; font-family:'DM Mono',monospace; font-size:9px; color:rgba(200,192,168,0.4);">45 min</div>
+              <div style="padding:10px; background:rgba(200,192,168,0.04); border:1px solid rgba(200,192,168,0.08); border-radius:10px; text-align:center; font-family:'DM Mono',monospace; font-size:9px; color:rgba(200,192,168,0.4);">60 min</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.2em; color:var(--dusk); text-transform:uppercase; margin-bottom:8px;">Options</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:rgba(200,192,168,0.04); border-radius:10px; margin-bottom:5px;">
+              <span style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(200,192,168,0.5);">Fade out audio</span>
+              <div style="width:28px; height:16px; background:rgba(155,143,196,0.4); border-radius:8px; position:relative;"><div style="position:absolute; right:2px; top:2px; width:12px; height:12px; border-radius:50%; background:var(--lavender);"></div></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:rgba(200,192,168,0.04); border-radius:10px;">
+              <span style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(200,192,168,0.5);">Black screen</span>
+              <div style="width:28px; height:16px; background:rgba(155,143,196,0.4); border-radius:8px; position:relative;"><div style="position:absolute; right:2px; top:2px; width:12px; height:12px; border-radius:50%; background:var(--lavender);"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">04 · Sleep Timer</div>
+      </div>
+
+      <!-- Screen 5: Upgrade -->
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" style="padding:24px 16px; display:flex; flex-direction:column; align-items:center; gap:14px; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:-20%; left:50%; transform:translateX(-50%); width:200px; height:200px; background:radial-gradient(circle, rgba(155,143,196,0.12), transparent 70%); pointer-events:none;"></div>
+          <div class="screen-status" style="align-self:stretch;">
+            <span>9:41</span><span>⚡</span>
+          </div>
+          <svg width="48" height="48" viewBox="0 0 64 64" fill="none" style="margin-top:4px;">
+            <defs>
+              <radialGradient id="upg1" cx="40%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="#e8e4d8"/>
+                <stop offset="100%" stop-color="#9b8fc4" stop-opacity="0.6"/>
+              </radialGradient>
+            </defs>
+            <path d="M38 12C27.5 12 19 20.5 19 31C19 41.5 27.5 50 38 50C32 46 27 39 27 31C27 23 32 16 38 12Z" fill="url(#upg1)"/>
+            <circle cx="46" cy="18" r="1.5" fill="#e8e4d8" opacity="0.8"/>
+            <circle cx="52" cy="27" r="1" fill="#e8e4d8" opacity="0.6"/>
+          </svg>
+          <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300; color:var(--moon); text-align:center; line-height:1.25;">Unlock <em style="font-style:italic; color:var(--moon-glow);">everything.</em><br/>Forever.</div>
+          <div style="display:flex; flex-direction:column; gap:5px; width:100%;">
+            <div style="display:flex; align-items:center; gap:8px; font-family:'DM Mono',monospace; font-size:8px; color:rgba(200,192,168,0.5);">
+              <span style="color:var(--lavender); font-size:10px;">✦</span> All 12 sounds
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; font-family:'DM Mono',monospace; font-size:8px; color:rgba(200,192,168,0.5);">
+              <span style="color:var(--lavender); font-size:10px;">✦</span> Sound mixing
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; font-family:'DM Mono',monospace; font-size:8px; color:rgba(200,192,168,0.5);">
+              <span style="color:var(--lavender); font-size:10px;">✦</span> No ads. Ever.
+            </div>
+          </div>
+          <div style="width:100%; padding:14px; background:linear-gradient(135deg, rgba(155,143,196,0.25), rgba(107,125,179,0.15)); border:1px solid rgba(155,143,196,0.35); border-radius:14px; text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--moon);">$1.99</div>
+            <div style="font-family:'DM Mono',monospace; font-size:7px; color:var(--dusk); letter-spacing:0.2em; text-transform:uppercase;">One-time · No subscription</div>
+          </div>
+          <div style="font-family:'DM Mono',monospace; font-size:7px; color:rgba(200,192,168,0.2); letter-spacing:0.1em;">Pay once. Yours forever.</div>
+        </div>
+        <div class="screen-label">05 · Upgrade</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ICONOGRAPHY ═══ -->
+  <section>
+    <div class="section-label">05 — Sound Iconography</div>
+
+    <div class="icon-set">
+      <div class="icon-chip">
+        <div class="icon-chip-bg">🌧</div>
+        <span class="icon-chip-name">Rain</span>
+      </div>
+      <div class="icon-chip">
+        <div class="icon-chip-bg">🌊</div>
+        <span class="icon-chip-name">Ocean</span>
+      </div>
+      <div class="icon-chip">
+        <div class="icon-chip-bg">🌲</div>
+        <span class="icon-chip-name">Forest</span>
+      </div>
+      <div class="icon-chip">
+        <div class="icon-chip-bg">🔥</div>
+        <span class="icon-chip-name">Fireplace</span>
+      </div>
+      <div class="icon-chip">
+        <div class="icon-chip-bg">💨</div>
+        <span class="icon-chip-name">Wind</span>
+      </div>
+      <div class="icon-chip">
+        <div class="icon-chip-bg">☕</div>
+        <span class="icon-chip-name">Café</span>
+      </div>
+      <div class="icon-chip">
+        <div class="icon-chip-bg">🌌</div>
+        <span class="icon-chip-name">Space</span>
+      </div>
+      <div class="icon-chip">
+        <div class="icon-chip-bg">🎵</div>
+        <span class="icon-chip-name">Brown Noise</span>
+      </div>
+      <div class="icon-chip">
+        <div class="icon-chip-bg">🌙</div>
+        <span class="icon-chip-name">Night Insects</span>
+      </div>
+      <div class="icon-chip">
+        <div class="icon-chip-bg">⛈</div>
+        <span class="icon-chip-name">Storm</span>
+      </div>
+      <div class="icon-chip">
+        <div class="icon-chip-bg">🚂</div>
+        <span class="icon-chip-name">Train</span>
+      </div>
+      <div class="icon-chip">
+        <div class="icon-chip-bg">🌬</div>
+        <span class="icon-chip-name">Fan</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px; padding: 24px 40px; background: var(--deep);">
+      <p style="font-family: 'DM Mono', monospace; font-size: 9px; color: var(--dusk); line-height: 1.9;">Icon principle: use natural emoji at large scale. They feel immediate, universal, and require zero learning. In the app, selected icons gain the lavender glow treatment — active state must feel alive without being jarring.</p>
+    </div>
+  </section>
+
+  <!-- ═══ MOTION ═══ -->
+  <section>
+    <div class="section-label">06 — Motion Principles</div>
+
+    <div class="motion-grid">
+      <div class="motion-card">
+        <div class="motion-demo">
+          <div class="motion-orb breathe"></div>
+        </div>
+        <div class="motion-title">Breathe, don't bounce</div>
+        <div class="motion-desc">
+          All animations follow a slow sine curve (4–6s ease-in-out). Nothing snaps. Nothing bounces. Transitions breathe in and out like a sleeping person. Duration: slow. Easing: always ease-in-out.
+        </div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-demo">
+          <div class="motion-orb drift"></div>
+        </div>
+        <div class="motion-title">Drift, never rush</div>
+        <div class="motion-desc">
+          Background elements drift like smoke or clouds — imperceptibly slow. The ambient glow shifts position over 20–30 second cycles. This creates a sense of depth without drawing conscious attention.
+        </div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-demo">
+          <div class="motion-orb fade-demo"></div>
+        </div>
+        <div class="motion-title">Fade to nothing</div>
+        <div class="motion-desc">
+          Once sound begins, the UI fades to black over 8 seconds. Controls reappear on tap. This is the core UX principle: the app should disappear so sleep can appear.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ VOICE & TONE ═══ -->
+  <section>
+    <div class="section-label">07 — Voice & Tone</div>
+
+    <div class="voice-grid">
+      <div class="voice-card">
+        <div class="voice-card-label">Essence</div>
+        <div class="voice-card-main">"A quiet friend who<br>already knows what you need."</div>
+        <div class="voice-card-sub">
+          TapSleep speaks in whispers, not announcements.<br>
+          It uses short sentences. It never explains itself.<br>
+          It trusts users to know what they're doing.
+        </div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-card-label">Character</div>
+        <div class="voice-card-main">Calm · Brief · Honest · Warm</div>
+        <div class="voice-card-sub">
+          Not clinical. Not cheerful-corporate.<br>
+          Not spiritual or over-precious about wellness.<br>
+          Just… quiet. Like 1am should be.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 2px;">
+      <div class="copy-examples">
+        <div class="copy-row">
+          <div class="copy-cell context"><span class="ctx-text">Onboarding</span></div>
+          <div class="copy-cell bad">
+            <span class="copy-tag bad-tag">✕ Don't</span>
+            <div class="copy-text bad">Welcome to your sleep wellness journey! Let's personalize your experience to help you achieve deeper, more restorative rest tonight.</div>
+          </div>
+          <div class="copy-cell good">
+            <span class="copy-tag good-tag">✓ Do</span>
+            <div class="copy-text good">Pick a sound. Press play. Go to sleep.</div>
+          </div>
+        </div>
+        <div class="copy-row">
+          <div class="copy-cell context"><span class="ctx-text">Upgrade prompt</span></div>
+          <div class="copy-cell bad">
+            <span class="copy-tag bad-tag">✕ Don't</span>
+            <div class="copy-text bad">🌟 Unlock Premium TapSleep and transform your sleep with our full library of curated soundscapes!</div>
+          </div>
+          <div class="copy-cell good">
+            <span class="copy-tag good-tag">✓ Do</span>
+            <div class="copy-text good">Unlock everything. $1.99. Once.</div>
+          </div>
+        </div>
+        <div class="copy-row">
+          <div class="copy-cell context"><span class="ctx-text">Timer ends</span></div>
+          <div class="copy-cell bad">
+            <span class="copy-tag bad-tag">✕ Don't</span>
+            <div class="copy-text bad">Your sleep session has completed! Sweet dreams! 😴 Tap to start a new session.</div>
+          </div>
+          <div class="copy-cell good">
+            <span class="copy-tag good-tag">✓ Do</span>
+            <div class="copy-text good">[silence]</div>
+          </div>
+        </div>
+        <div class="copy-row">
+          <div class="copy-cell context"><span class="ctx-text">App Store listing</span></div>
+          <div class="copy-cell bad">
+            <span class="copy-tag bad-tag">✕ Don't</span>
+            <div class="copy-text bad">#1 Sleep App for better rest and relaxation. Join millions of users on their sleep wellness journey.</div>
+          </div>
+          <div class="copy-cell good">
+            <span class="copy-tag good-tag">✓ Do</span>
+            <div class="copy-text good">Press play. Close your eyes. Everything else can wait.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MARKETING ═══ -->
+  <section>
+    <div class="section-label">08 — Marketing Materials</div>
+
+    <div class="marketing-grid">
+      <div class="marketing-card app-store">
+        <div class="mkt-eyebrow">App Store · Feature Banner</div>
+        <div class="mkt-headline">Sleep.<br>No <em>subscription</em><br>required.</div>
+        <div class="mkt-sub">12 ambient sounds. Sleep timer. Sound mixing. Pay once, sleep forever. No account. No upsells at 1am.</div>
+        <div class="mkt-badge">$1.99 · One time · No subscription</div>
+      </div>
+
+      <div class="marketing-card social">
+        <div class="mkt-eyebrow">Social · Reddit / TikTok</div>
+        <div class="mkt-headline">Why does<br><em>falling asleep</em><br>cost $70 a year?</div>
+        <div class="mkt-sub">Calm wanted $69.99. Headspace wanted $69.99. We wanted $1.99. Once. TapSleep.</div>
+        <div class="mkt-badge">r/insomnia approved</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 2px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px;">
+      <div style="padding:40px; background:var(--deep);">
+        <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; color:var(--dusk); text-transform:uppercase; margin-bottom:16px;">App Store tagline</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:300; color:var(--moon); line-height:1.3;">Two taps to sleep.<br><em style="font-style:italic; color:var(--moon-glow);">No nonsense.</em></div>
+      </div>
+      <div style="padding:40px; background:var(--deep);">
+        <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; color:var(--dusk); text-transform:uppercase; margin-bottom:16px;">Reddit / Community</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:300; color:var(--moon); line-height:1.3;">I just want<br><em style="font-style:italic; color:var(--moon-glow);">rain sounds.</em></div>
+      </div>
+      <div style="padding:40px; background:var(--deep);">
+        <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; color:var(--dusk); text-transform:uppercase; margin-bottom:16px;">Word of mouth</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:300; color:var(--moon); line-height:1.3;">The sleep app<br>that <em style="font-style:italic; color:var(--moon-glow);">disappears.</em></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DO/DON'T ═══ -->
+  <section>
+    <div class="section-label">09 — Brand Principles</div>
+
+    <div class="dont-grid">
+      <div class="principle-card do-card">
+        <div class="principle-label do">Do</div>
+        <ul class="principle-list">
+          <li>Speak in short, quiet sentences. Whisper.</li>
+          <li>Use darkness. The dark is the product.</li>
+          <li>Be honest about pricing upfront. Always.</li>
+          <li>Design for 1am. Dim. Slow. Frictionless.</li>
+          <li>Let the UI disappear when not needed.</li>
+          <li>Trust users. They know how to sleep.</li>
+          <li>Use the serif for everything emotional.</li>
+        </ul>
+      </div>
+      <div class="principle-card dont-card">
+        <div class="principle-label dont">Don't</div>
+        <ul class="principle-list">
+          <li>Never use the word "journey" or "wellness".</li>
+          <li>Never show ads during sleep or playback.</li>
+          <li>Never ask for an account or email.</li>
+          <li>Never use white backgrounds. Not once.</li>
+          <li>Never use emojis in headlines or copy.</li>
+          <li>Never put a paywall between a user and sleep.</li>
+          <li>Never animate aggressively or bounce.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="brand-footer">
+    <div class="footer-logo">Tap<em>Sleep</em></div>
+    <div class="footer-meta">
+      Brand Identity System<br>
+      iOS & Android · 2026<br>
+      Press play. Close your eyes.
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Generate star field
+  const starfield = document.getElementById('starfield');
+  const count = 180;
+
+  for (let i = 0; i < count; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+
+    const size = Math.random() < 0.7 ? Math.random() * 1.2 + 0.4 : Math.random() * 2 + 1;
+    const x = Math.random() * 100;
+    const y = Math.random() * 100;
+    const dur = (Math.random() * 5 + 3).toFixed(1);
+    const delay = (Math.random() * 8).toFixed(1);
+    const minOp = (Math.random() * 0.15 + 0.05).toFixed(2);
+    const maxOp = (Math.random() * 0.5 + 0.3).toFixed(2);
+
+    star.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      left: ${x}%;
+      top: ${y}%;
+      --dur: ${dur}s;
+      --delay: -${delay}s;
+      --min-op: ${minOp};
+      --max-op: ${maxOp};
+    `;
+
+    starfield.appendChild(star);
+  }
+</script>
+
+</body>
+</html>
