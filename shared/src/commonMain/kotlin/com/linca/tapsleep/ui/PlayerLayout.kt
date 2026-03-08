@@ -52,12 +52,6 @@ private val OrbCenter = Color(0x669B8FC4)
 private val OrbEdge = Color(0x266B7DB3)
 private val OrbBorder = Color(0x4D9B8FC4)
 
-/**
- * Shared player UI used by both [PlayerScreen] and [BlendPlayerScreen].
- *
- * Owns all timer/animation state. Audio lifecycle (start, pause, resume, stop)
- * is delegated to the caller via lambdas so each screen can wire its own players.
- */
 @Composable
 fun PlayerLayout(
     sounds: List<Sound>,

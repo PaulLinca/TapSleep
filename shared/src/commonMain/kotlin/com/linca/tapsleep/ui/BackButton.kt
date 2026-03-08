@@ -36,7 +36,7 @@ fun BackButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
             imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
             contentDescription = "Back",
             tint = Dusk,
-            modifier = Modifier.size(20.dp),
+            modifier = Modifier.size(35.dp),
         )
         Spacer(Modifier.width(6.dp))
         Text(
@@ -44,6 +44,7 @@ fun BackButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.labelLarge,
             color = Dusk,
+            fontSize = 16.sp
         )
     }
 }
