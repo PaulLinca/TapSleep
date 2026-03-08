@@ -47,12 +47,13 @@ import com.linca.tapsleep.ui.theme.AuroraPale
 import com.linca.tapsleep.ui.theme.Dusk
 import com.linca.tapsleep.ui.theme.Lavender
 import com.linca.tapsleep.ui.theme.LavenderPale
+import com.linca.tapsleep.ui.theme.Deep
 import com.linca.tapsleep.ui.theme.Moon
 import com.linca.tapsleep.ui.theme.MoonGlow
 import com.linca.tapsleep.ui.theme.Night
 
-private val SlotBg = Moon.copy(alpha = 0.04f)
-private val SlotBorder = MoonGlow.copy(alpha = 0.25f)
+private val SlotBg = Deep.copy(alpha = 0.6f)
+private val SlotBorder = MoonGlow.copy(alpha = 0.4f)
 
 @Composable
 fun BlendScreen(
@@ -78,10 +79,11 @@ fun BlendScreen(
         }
     }
 
+    Box(modifier = Modifier.fillMaxSize()) {
+        StarfieldBackground(Modifier.fillMaxSize())
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Night)
             .safeDrawingPadding()
             .padding(horizontal = 24.dp),
     ) {
@@ -197,7 +199,8 @@ fun BlendScreen(
         }
 
         Spacer(Modifier.height(30.dp))
-    }
+    } // Column
+    } // outer Box
 }
 
 @Composable

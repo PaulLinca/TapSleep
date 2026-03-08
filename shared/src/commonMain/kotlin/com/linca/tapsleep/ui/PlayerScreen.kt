@@ -46,7 +46,6 @@ import com.linca.tapsleep.ui.theme.DmMono
 import com.linca.tapsleep.ui.theme.Dusk
 import com.linca.tapsleep.ui.theme.Moon
 import com.linca.tapsleep.ui.theme.MoonGlow
-import com.linca.tapsleep.ui.theme.Night
 import kotlinx.coroutines.delay
 
 private val OrbCenter = Color(0x669B8FC4)
@@ -147,13 +146,14 @@ fun PlayerScreen(sound: Sound, onBack: () -> Unit) {
         }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Night)
-            .safeDrawingPadding()
-            .padding(horizontal = 24.dp, vertical = 20.dp),
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        StarfieldBackground(Modifier.fillMaxSize())
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .safeDrawingPadding()
+                .padding(horizontal = 24.dp, vertical = 20.dp),
+        ) {
         Text(
             "←",
             style = MaterialTheme.typography.headlineMedium,
@@ -239,7 +239,8 @@ fun PlayerScreen(sound: Sound, onBack: () -> Unit) {
                 color = Dusk,
             )
         }
-    }
+        } // inner Box
+    } // outer Box
 }
 
 @Composable

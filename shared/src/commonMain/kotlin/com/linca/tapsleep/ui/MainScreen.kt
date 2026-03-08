@@ -37,7 +37,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -45,21 +44,22 @@ import com.linca.tapsleep.ui.theme.AuroraPale
 import com.linca.tapsleep.ui.theme.Dusk
 import com.linca.tapsleep.ui.theme.Lavender
 import com.linca.tapsleep.ui.theme.LavenderPale
+import com.linca.tapsleep.ui.theme.Deep
 import com.linca.tapsleep.ui.theme.MoonGlow
-import com.linca.tapsleep.ui.theme.Night
 
-private val SoundBtnBg = Color(0x0DC8C0A8)
-private val SoundBtnBorder = MoonGlow.copy(alpha = 0.5f)
-private val SoundBtnText = MoonGlow.copy(alpha = 0.5f)
+private val SoundBtnBg = Deep.copy(alpha = 0.6f)
+private val SoundBtnBorder = MoonGlow.copy(alpha = 0.4f)
+private val SoundBtnText = MoonGlow
 
 @Composable
 fun MainScreen(onSoundClick: (Sound) -> Unit = {}, onBlendClick: () -> Unit = {}) {
     var selectedIndex by remember { mutableStateOf(-1) }
 
+    Box(modifier = Modifier.fillMaxSize()) {
+        StarfieldBackground(Modifier.fillMaxSize())
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Night)
             .safeDrawingPadding()
             .padding(horizontal = 24.dp),
     ) {
@@ -124,7 +124,8 @@ fun MainScreen(onSoundClick: (Sound) -> Unit = {}, onBlendClick: () -> Unit = {}
         }
 
         Spacer(Modifier.weight(1f))
-    }
+    } // Column
+    } // outer Box
 }
 
 @Composable

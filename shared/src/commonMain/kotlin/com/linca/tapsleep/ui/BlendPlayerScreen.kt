@@ -48,7 +48,6 @@ import com.linca.tapsleep.ui.theme.DmMono
 import com.linca.tapsleep.ui.theme.Dusk
 import com.linca.tapsleep.ui.theme.Moon
 import com.linca.tapsleep.ui.theme.MoonGlow
-import com.linca.tapsleep.ui.theme.Night
 import kotlinx.coroutines.delay
 
 private val BlendOrbCenter = Color(0x669B8FC4)
@@ -142,13 +141,14 @@ fun BlendPlayerScreen(sounds: List<Sound>, onBack: () -> Unit) {
         }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Night)
-            .safeDrawingPadding()
-            .padding(horizontal = 24.dp, vertical = 20.dp),
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        StarfieldBackground(Modifier.fillMaxSize())
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .safeDrawingPadding()
+                .padding(horizontal = 24.dp, vertical = 20.dp),
+        ) {
         // ── Back arrow ────────────────────────────────────────────────────────
         Text(
             "←",
@@ -250,5 +250,6 @@ fun BlendPlayerScreen(sounds: List<Sound>, onBack: () -> Unit) {
             )
             Spacer(Modifier.height(8.dp))
         }
-    }
+        } // inner Box
+    } // outer Box
 }
