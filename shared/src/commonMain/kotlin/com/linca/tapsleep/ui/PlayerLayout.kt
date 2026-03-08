@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.linca.tapsleep.ui.theme.DmMono
 import com.linca.tapsleep.ui.theme.Dusk
+import com.linca.tapsleep.ui.theme.Lavender
 import com.linca.tapsleep.ui.theme.Moon
 import com.linca.tapsleep.ui.theme.MoonGlow
 import kotlinx.coroutines.delay
@@ -61,7 +62,7 @@ fun PlayerLayout(
     onStop: () -> Unit,
     onBack: () -> Unit,
 ) {
-    val preset by remember { mutableStateOf(TimerPreset.MIN_45) }
+    var preset by remember { mutableStateOf(TimerPreset.MIN_30) }
     var secondsLeft by remember { mutableStateOf(preset.totalSeconds) }
     var isPlaying by remember { mutableStateOf(true) }
     var hasStarted by remember { mutableStateOf(false) }
@@ -240,10 +241,38 @@ fun PlayerLayout(
                 )
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    if (preset == TimerPreset.NONE) "NO TIMER" else if (isPlaying) "UNTIL SILENCE" else "PAUSED",
+                    if (isPlaying) "UNTIL SILENCE" else "PAUSED",
                     style = MaterialTheme.typography.labelLarge,
                     color = Dusk,
                 )
+
+                Spacer(Modifier.height(28.dp))
+
+                // ── Timer picker ─────────────────────────────────────────────
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    listOf(TimerPreset.MIN_30, TimerPreset.MIN_60, TimerPreset.HR_8).forEach { option ->
+                        val selected = preset == option
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(50))
+                                .background(if (selected) Lavender.copy(alpha = 0.18f) else Color.Transparent)
+                                .border(
+                                    1.dp,
+                                    if (selected) Lavender.copy(alpha = 0.7f) else Dusk.copy(alpha = 0.35f),
+                                    RoundedCornerShape(50),
+                                )
+                                .clickable { preset = option; secondsLeft = option.totalSeconds }
+                                .padding(horizontal = 18.dp, vertical = 8.dp),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(
+                                option.label,
+                                style = MaterialTheme.typography.labelLarge.copy(fontFamily = DmMono),
+                                color = if (selected) Lavender else Dusk.copy(alpha = 0.55f),
+                            )
+                        }
+                    }
+                }
             }
         }
     }
