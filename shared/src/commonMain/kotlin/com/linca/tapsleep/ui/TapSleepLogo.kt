@@ -1,24 +1,18 @@
 package com.linca.tapsleep.ui
 
-import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
@@ -27,72 +21,26 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.linca.tapsleep.ui.theme.Dusk
-import com.linca.tapsleep.ui.theme.Lavender
 import com.linca.tapsleep.ui.theme.Moon
 import com.linca.tapsleep.ui.theme.MoonGlow
+import org.jetbrains.compose.resources.painterResource
+import tapsleep.shared.generated.resources.Res
+import tapsleep.shared.generated.resources.ic_tapsleep_moon
 
 // ─── Moon Mark ───────────────────────────────────────────────────────────────
-// SVG path from TapSleep brand identity (64×64 viewBox):
-// M38 12 C27.5 12 19 20.5 19 31 C19 41.5 27.5 50 38 50
-//        C32 46 27 39 27 31 C27 23 32 16 38 12 Z
-
-private val moonPath = Path().apply {
-    // M38 12
-    moveTo(38f, 12f)
-    // C27.5 12 19 20.5 19 31
-    cubicTo(27.5f, 12f, 19f, 20.5f, 19f, 31f)
-    // C19 41.5 27.5 50 38 50
-    cubicTo(19f, 41.5f, 27.5f, 50f, 38f, 50f)
-    // C32 46 27 39 27 31
-    cubicTo(32f, 46f, 27f, 39f, 27f, 31f)
-    // C27 23 32 16 38 12
-    cubicTo(27f, 23f, 32f, 16f, 38f, 12f)
-    close()
-}
-
-// Stars from brand identity (64×64 viewBox): cx, cy, radius, alpha
-private val starData = listOf(
-    floatArrayOf(46f, 18f, 1.5f, 0.80f),
-    floatArrayOf(52f, 28f, 1.0f, 0.60f),
-    floatArrayOf(49f, 38f, 1.2f, 0.50f),
-    floatArrayOf(42f, 13f, 0.9f, 0.50f),
-)
-
-private fun DrawScope.drawMoon(brush: Brush, sizePx: Float) {
-    val scaleFactor = sizePx / 64f
-    scale(scaleFactor, pivot = Offset.Zero) {
-        drawPath(moonPath, brush)
-    }
-}
-
-private fun DrawScope.drawStars(color: Color, sizePx: Float) {
-    val s = sizePx / 64f
-    for ((cx, cy, r, alpha) in starData) {
-        drawCircle(
-            color = color.copy(alpha = alpha),
-            radius = r * s,
-            center = Offset(cx * s, cy * s),
-        )
-    }
-}
+// Renders ic_tapsleep_moon.svg from compose resources — single source of truth
+// for the crescent shape across the app and launcher icons.
 
 @Composable
 fun TapSleepLogoMark(
     modifier: Modifier = Modifier,
     size: Dp = 48.dp,
-    startColor: Color = Lavender,
-    endColor: Color = Dusk,
-    starColor: Color = Moon,
 ) {
-    Canvas(modifier = modifier.size(size)) {
-        val brush = Brush.linearGradient(
-            colors = listOf(startColor, endColor),
-            start = Offset(this.size.width * 0.3f, 0f),
-            end = Offset(this.size.width * 0.7f, this.size.height),
-        )
-        drawMoon(brush, this.size.width)
-        drawStars(starColor, this.size.width)
-    }
+    Image(
+        painter = painterResource(Res.drawable.ic_tapsleep_moon),
+        contentDescription = null,
+        modifier = modifier.size(size),
+    )
 }
 
 // ─── Wordmark ─────────────────────────────────────────────────────────────────
@@ -142,6 +90,7 @@ fun TapSleepLogo(
     }
 }
 
+// ─── Stacked lockup (used on splash screen) ───────────────────────────────────
 
 @Composable
 fun TapSleepLogoStacked(

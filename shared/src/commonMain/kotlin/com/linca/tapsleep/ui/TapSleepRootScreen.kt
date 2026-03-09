@@ -8,6 +8,7 @@ import androidx.compose.runtime.setValue
 import com.linca.tapsleep.ui.theme.TapSleepTheme
 
 private sealed interface Screen {
+    data object Splash : Screen
     data object Picker : Screen
     data object BlendPicker : Screen
     data class Player(val sound: Sound) : Screen
@@ -16,10 +17,13 @@ private sealed interface Screen {
 
 @Composable
 fun TapSleepRootScreen() {
-    var screen by remember { mutableStateOf<Screen>(Screen.Picker) }
+    var screen by remember { mutableStateOf<Screen>(Screen.Splash) }
 
     TapSleepTheme {
         when (val s = screen) {
+            is Screen.Splash -> SplashScreen(
+                onFinished = { screen = Screen.Picker },
+            )
             is Screen.Picker -> MainScreen(
                 onSoundClick = { sound -> screen = Screen.Player(sound) },
                 onBlendClick = { screen = Screen.BlendPicker },
