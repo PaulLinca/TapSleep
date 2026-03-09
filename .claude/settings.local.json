@@ -12,7 +12,23 @@
       "Bash(./gradlew :shared:compileDebugKotlinAndroid 2>&1 | tail -8)",
       "Bash(python3 -c \"from PIL import Image; print\\('Pillow ok'\\)\" 2>&1 || python3 -c \"import cairo; print\\('cairo ok'\\)\" 2>&1 || echo \"no image lib\")",
       "Bash(which convert && convert --version | head -2 || echo \"no imagemagick\")",
-      "Bash(swift --version 2>&1 | head -1)"
+      "Bash(swift --version 2>&1 | head -1)",
+      "Bash(./gradlew :shared:linkDebugFrameworkIosSimulatorArm64 2>&1 | tail -30)",
+      "Bash(find /Users/ptudor01/AndroidStudioProjects/TapSleep/shared/build -name \"*.framework\" -type d 2>/dev/null | head -10)",
+      "Bash(./gradlew :shared:linkDebugFrameworkIosSimulatorArm64 --warning-mode all 2>&1 | grep -i \"deprecated\\\\|forUseAtConfigurationTime\" | head -20)",
+      "Bash(./gradlew :shared:assembleDebug --warning-mode all 2>&1 | grep -i \"deprecat\\\\|forUseAt\" | head -20)",
+      "Bash(./gradlew :shared:assembleDebug --warning-mode all 2>&1 | grep -B5 \"forUseAtConfigurationTime\" | head -30)",
+      "Bash(./gradlew :shared:assembleDebug --warning-mode all --stacktrace 2>&1 | grep -A3 \"forUseAtConfigurationTime\" | head -30)",
+      "Bash(./gradlew :shared:assembleDebug --warning-mode all 2>&1 | grep -v \"^>\" | grep -v \"^$\" | head -40)",
+      "Bash(./gradlew :shared:assembleDebug --warning-mode all --no-configuration-cache 2>&1 | head -60)",
+      "Bash(./gradlew :shared:linkDebugFrameworkIosSimulatorArm64 --no-configuration-cache 2>&1 | tail -20)",
+      "Bash(./gradlew :shared:assembleDebug --warning-mode all --no-configuration-cache 2>&1 | grep -i \"deprecat\\\\|forUseAt\" | head -20)",
+      "Bash(./gradlew :shared:assembleDebug --warning-mode all --no-configuration-cache --stacktrace 2>&1 | grep -A 15 \"forUseAtConfigurationTime\" | head -40)",
+      "Bash(./gradlew :shared:tasks --no-configuration-cache 2>&1 | grep -i \"ios\\\\|xcframe\\\\|apple\\\\|link\" | head -30)",
+      "Bash(./gradlew :shared:tasks --no-configuration-cache 2>&1 | grep -i \"xcframe\" | head -10)",
+      "Bash(./gradlew :shared:tasks --no-configuration-cache 2>&1 | grep -i \"xcframe\\\\|Release\\\\|Debug\" | grep -i \"xcframe\" | head -10)",
+      "Bash(./gradlew :shared:tasks --no-configuration-cache --all 2>&1 | grep -i \"xcframe\" | head -10)",
+      "Bash(./gradlew :shared:tasks --no-configuration-cache --all 2>&1 | grep -i \"xcframe\")"
     ]
   }
 }

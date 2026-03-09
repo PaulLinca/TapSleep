@@ -18,9 +18,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -138,21 +135,27 @@ fun BlendScreen(
         Spacer(Modifier.height(12.dp))
 
         // ── Sound picker grid ─────────────────────────────────────────────────
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+        Column(
             modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            itemsIndexed(sounds) { _, sound ->
-                val isSelected = sound in slots
-                val isFull = slots.none { it == null } && !isSelected
-                BlendSoundButton(
-                    sound = sound,
-                    isSelected = isSelected,
-                    enabled = !isFull,
-                    onClick = { toggle(sound) },
-                )
+            sounds.chunked(3).forEach { row ->
+                Row(
+                    modifier = Modifier.weight(1f).fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    row.forEach { sound ->
+                        val isSelected = sound in slots
+                        val isFull = slots.none { it == null } && !isSelected
+                        BlendSoundButton(
+                            sound = sound,
+                            isSelected = isSelected,
+                            enabled = !isFull,
+                            onClick = { toggle(sound) },
+                            modifier = Modifier.weight(1f).fillMaxSize(),
+                        )
+                    }
+                }
             }
         }
 
@@ -274,6 +277,7 @@ private fun BlendSoundButton(
     isSelected: Boolean,
     enabled: Boolean,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val shape = RoundedCornerShape(25.dp)
     val activeBrush = Brush.linearGradient(colors = listOf(LavenderPale, AuroraPale))
@@ -286,8 +290,7 @@ private fun BlendSoundButton(
     val alpha = if (enabled || isSelected) 1f else 0.35f
 
     Box(
-        modifier = Modifier
-            .aspectRatio(1f)
+        modifier = modifier
             .graphicsLayer { this.alpha = alpha }
             .clip(shape)
             .drawBehind {
