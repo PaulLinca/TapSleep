@@ -69,7 +69,10 @@ fun PlayerLayout(
 
     LaunchedEffect(isPlaying) {
         when {
-            isPlaying && !hasStarted -> { onStartPlayback(); hasStarted = true }
+            isPlaying && !hasStarted -> {
+                onStartPlayback(); hasStarted = true
+            }
+
             isPlaying -> onResume()
             else -> onPause()
         }
@@ -81,7 +84,9 @@ fun PlayerLayout(
         while (isPlaying) {
             delay(1000L)
             val s = secondsLeft ?: continue
-            if (s <= 0) { onStop(); onBack(); break }
+            if (s <= 0) {
+                onStop(); onBack(); break
+            }
             secondsLeft = s - 1
         }
     }
@@ -158,8 +163,8 @@ fun PlayerLayout(
                     )
                     Spacer(Modifier.height(8.dp))
                     Text(
-                        sound.name,
-                        style = MaterialTheme.typography.headlineSmall.copy(fontStyle = FontStyle.Italic),
+                        sound.name.uppercase(),
+                        style = MaterialTheme.typography.labelLarge,
                         color = MoonGlow,
                     )
                 } else {
@@ -250,7 +255,11 @@ fun PlayerLayout(
 
                 // ── Timer picker ─────────────────────────────────────────────
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                    listOf(TimerPreset.MIN_30, TimerPreset.MIN_60, TimerPreset.HR_8).forEach { option ->
+                    listOf(
+                        TimerPreset.MIN_30,
+                        TimerPreset.MIN_60,
+                        TimerPreset.HR_8
+                    ).forEach { option ->
                         val selected = preset == option
                         Box(
                             modifier = Modifier
