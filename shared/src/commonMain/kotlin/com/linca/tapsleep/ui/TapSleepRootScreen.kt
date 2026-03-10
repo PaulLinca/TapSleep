@@ -20,6 +20,15 @@ fun TapSleepRootScreen() {
     var screen by remember { mutableStateOf<Screen>(Screen.Splash) }
 
     TapSleepTheme {
+        PlatformBackHandler {
+            when (screen) {
+                is Screen.Player -> screen = Screen.Picker
+                is Screen.BlendPlayer -> screen = Screen.BlendPicker
+                is Screen.BlendPicker -> screen = Screen.Picker
+                else -> Unit
+            }
+        }
+
         when (val s = screen) {
             is Screen.Splash -> SplashScreen(
                 onFinished = { screen = Screen.Picker },

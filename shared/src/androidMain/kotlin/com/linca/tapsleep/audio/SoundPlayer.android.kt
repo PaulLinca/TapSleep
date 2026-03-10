@@ -6,32 +6,81 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+private const val CROSSFADE_MS = 2500L
+private const val FADE_STEPS = 40
 
 private class AndroidSoundPlayer(private val context: Context) : SoundPlayer {
-    private var mediaPlayer: MediaPlayer? = null
+    private var playerA: MediaPlayer? = null
+    private var playerB: MediaPlayer? = null
+    private var scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     override fun play(audioId: String) {
+        stop()
+        scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
         val resId = context.resources.getIdentifier(audioId, "raw", context.packageName)
-        mediaPlayer?.release()
-        if (resId == 0) return  // audio file not added yet — add res/raw/<audioId>.mp3
-        mediaPlayer = MediaPlayer.create(context, resId)?.apply {
-            isLooping = true
+        if (resId == 0) return
+        playerA = MediaPlayer.create(context, resId)?.apply {
+            isLooping = false
+            setVolume(1f, 1f)
             start()
+        }
+        scope.launch { crossfadeLoop(resId) }
+    }
+
+    private suspend fun crossfadeLoop(resId: Int) {
+        while (true) {
+            val current = playerA ?: return
+            val duration = current.duration.takeIf { it > 0 } ?: return
+            val fadeStartMs = (duration - CROSSFADE_MS).coerceAtLeast(0)
+
+            while (current.isPlaying && current.currentPosition < fadeStartMs) {
+                delay(80)
+            }
+            if (!current.isPlaying) return
+
+            val incoming = MediaPlayer.create(context, resId)?.apply {
+                isLooping = false
+                setVolume(0f, 0f)
+                start()
+            } ?: return
+            playerB = incoming
+
+            val stepDelay = CROSSFADE_MS / FADE_STEPS
+            repeat(FADE_STEPS.toInt()) { i ->
+                val t = (i + 1).toFloat() / FADE_STEPS
+                current.setVolume(1f - t, 1f - t)
+                incoming.setVolume(t, t)
+                delay(stepDelay)
+            }
+
+            current.stop()
+            current.release()
+            playerA = incoming
+            playerB = null
         }
     }
 
     override fun pause() {
-        mediaPlayer?.pause()
+        playerA?.pause()
+        playerB?.pause()
     }
 
     override fun resume() {
-        mediaPlayer?.start()
+        playerA?.start()
+        playerB?.start()
     }
 
     override fun stop() {
-        mediaPlayer?.stop()
-        mediaPlayer?.release()
-        mediaPlayer = null
+        scope.cancel()
+        playerA?.stop(); playerA?.release(); playerA = null
+        playerB?.stop(); playerB?.release(); playerB = null
     }
 }
 
