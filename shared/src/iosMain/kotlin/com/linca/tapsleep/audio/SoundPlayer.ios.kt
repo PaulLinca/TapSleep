@@ -13,9 +13,13 @@ import kotlinx.coroutines.launch
 import platform.AVFAudio.AVAudioPlayer
 import platform.AVFAudio.AVAudioSession
 import platform.AVFAudio.AVAudioSessionCategoryPlayback
+import platform.AVFAudio.setActive
 import platform.Foundation.NSBundle
 import platform.Foundation.NSNumber
+import platform.Foundation.numberWithDouble
 import platform.MediaPlayer.MPMediaItemPropertyTitle
+import platform.MediaPlayer.MPNowPlayingInfoPropertyElapsedPlaybackTime
+import platform.MediaPlayer.MPMediaItemPropertyPlaybackDuration
 import platform.MediaPlayer.MPNowPlayingInfoCenter
 import platform.MediaPlayer.MPNowPlayingInfoPropertyPlaybackRate
 import platform.MediaPlayer.MPRemoteCommandCenter
@@ -39,6 +43,7 @@ private class IosSoundPlayer : SoundPlayer {
         currentAudioId = audioId
         scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
         AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error = null)
+        AVAudioSession.sharedInstance().setActive(true, null)
         val url = NSBundle.mainBundle.URLForResource(audioId, withExtension = "mp3") ?: return
         playerA = AVAudioPlayer(contentsOfURL = url, error = null).apply {
             numberOfLoops = 0L
@@ -121,24 +126,29 @@ private class IosSoundPlayer : SoundPlayer {
     private fun setupRemoteControls() {
         if (remoteControlsSetUp) return
         val cc = MPRemoteCommandCenter.sharedCommandCenter()
-        cc.playCommand.addTargetWithHandler  { _ -> resume(); MPRemoteCommandHandlerStatusSuccess }
-        cc.pauseCommand.addTargetWithHandler { _ -> pause();  MPRemoteCommandHandlerStatusSuccess }
-        cc.stopCommand.addTargetWithHandler  { _ -> stop();   MPRemoteCommandHandlerStatusSuccess }
+        cc.playCommand.addTargetWithHandler { _ -> resume(); MPRemoteCommandHandlerStatusSuccess }
+        cc.pauseCommand.addTargetWithHandler { _ -> pause(); MPRemoteCommandHandlerStatusSuccess }
+        cc.stopCommand.addTargetWithHandler { _ -> stop(); MPRemoteCommandHandlerStatusSuccess }
         cc.togglePlayPauseCommand.addTargetWithHandler { _ ->
             if (isPaused) resume() else pause()
             MPRemoteCommandHandlerStatusSuccess
         }
-        cc.playCommand.enabled  = true
+        cc.playCommand.enabled = true
         cc.pauseCommand.enabled = true
-        cc.stopCommand.enabled  = true
+        cc.stopCommand.enabled = true
         cc.togglePlayPauseCommand.enabled = true
         remoteControlsSetUp = true
     }
 
     private fun updateNowPlaying(playing: Boolean) {
+        val player = playerA
+        val duration = player?.duration?.takeIf { it > 0 } ?: 0.0
+        val elapsed = player?.currentTime ?: 0.0
         MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = mapOf(
             MPMediaItemPropertyTitle to currentAudioId.replaceFirstChar { it.uppercase() },
-            MPNowPlayingInfoPropertyPlaybackRate to NSNumber.numberWithDouble(if (playing) 1.0 else 0.0)
+            MPNowPlayingInfoPropertyPlaybackRate to NSNumber.numberWithDouble(if (playing) 1.0 else 0.0),
+            MPMediaItemPropertyPlaybackDuration to NSNumber.numberWithDouble(duration),
+            MPNowPlayingInfoPropertyElapsedPlaybackTime to NSNumber.numberWithDouble(elapsed),
         )
     }
 
