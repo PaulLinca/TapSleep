@@ -20,6 +20,7 @@ private class AndroidSoundPlayer(private val context: Context) : SoundPlayer {
     private var playerA: MediaPlayer? = null
     private var playerB: MediaPlayer? = null
     private var scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    @Volatile private var targetVolume = 1f
 
     override fun play(audioId: String) {
         stop()
@@ -28,7 +29,7 @@ private class AndroidSoundPlayer(private val context: Context) : SoundPlayer {
         if (resId == 0) return
         playerA = MediaPlayer.create(context, resId)?.apply {
             isLooping = false
-            setVolume(1f, 1f)
+            setVolume(targetVolume, targetVolume)
             start()
         }
         scope.launch { crossfadeLoop(resId) }
@@ -55,8 +56,9 @@ private class AndroidSoundPlayer(private val context: Context) : SoundPlayer {
             val stepDelay = CROSSFADE_MS / FADE_STEPS
             repeat(FADE_STEPS.toInt()) { i ->
                 val t = (i + 1).toFloat() / FADE_STEPS
-                current.setVolume(1f - t, 1f - t)
-                incoming.setVolume(t, t)
+                val v = targetVolume
+                current.setVolume(v * (1f - t), v * (1f - t))
+                incoming.setVolume(v * t, v * t)
                 delay(stepDelay)
             }
 
@@ -75,6 +77,12 @@ private class AndroidSoundPlayer(private val context: Context) : SoundPlayer {
     override fun resume() {
         playerA?.start()
         playerB?.start()
+    }
+
+    override fun setVolume(volume: Float) {
+        targetVolume = volume
+        // Only apply immediately when not mid-crossfade; crossfade loop picks up targetVolume each step
+        if (playerB == null) playerA?.setVolume(volume, volume)
     }
 
     override fun stop() {

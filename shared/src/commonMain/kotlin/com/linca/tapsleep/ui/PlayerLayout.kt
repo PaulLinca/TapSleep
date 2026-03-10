@@ -61,6 +61,7 @@ fun PlayerLayout(
     onPause: () -> Unit,
     onStop: () -> Unit,
     onBack: () -> Unit,
+    extraContent: (@Composable () -> Unit)? = null,
 ) {
     var preset by remember { mutableStateOf(TimerPreset.MIN_30) }
     var secondsLeft by remember { mutableStateOf(preset.totalSeconds) }
@@ -253,7 +254,7 @@ fun PlayerLayout(
 
                 Spacer(Modifier.height(28.dp))
 
-                // ── Timer picker ─────────────────────────────────────────────
+                // ── Timer picker + extra ─────────────────────────────────────
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     listOf(
                         TimerPreset.MIN_30,
@@ -281,6 +282,11 @@ fun PlayerLayout(
                             )
                         }
                     }
+                }
+
+                if (extraContent != null) {
+                    Spacer(Modifier.height(24.dp))
+                    extraContent()
                 }
             }
         }

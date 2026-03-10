@@ -21,6 +21,7 @@ private class IosSoundPlayer : SoundPlayer {
     private var playerA: AVAudioPlayer? = null
     private var playerB: AVAudioPlayer? = null
     private var scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private var targetVolume = 1f
 
     override fun play(audioId: String) {
         stop()
@@ -28,7 +29,7 @@ private class IosSoundPlayer : SoundPlayer {
         val url = NSBundle.mainBundle.URLForResource(audioId, withExtension = "mp3") ?: return
         playerA = AVAudioPlayer(contentsOfURL = url, error = null).apply {
             numberOfLoops = 0L
-            volume = 1f
+            volume = targetVolume
             prepareToPlay()
             play()
         }
@@ -58,8 +59,9 @@ private class IosSoundPlayer : SoundPlayer {
             val stepDelayMs = (CROSSFADE_SECS * 1000.0 / FADE_STEPS).toLong()
             repeat(FADE_STEPS) { i ->
                 val t = (i + 1).toFloat() / FADE_STEPS
-                current.volume = 1f - t
-                incoming.volume = t
+                val v = targetVolume
+                current.volume = v * (1f - t)
+                incoming.volume = v * t
                 delay(stepDelayMs)
             }
 
@@ -77,6 +79,11 @@ private class IosSoundPlayer : SoundPlayer {
     override fun resume() {
         playerA?.play()
         playerB?.play()
+    }
+
+    override fun setVolume(volume: Float) {
+        targetVolume = volume
+        if (playerB == null) playerA?.volume = volume
     }
 
     override fun stop() {

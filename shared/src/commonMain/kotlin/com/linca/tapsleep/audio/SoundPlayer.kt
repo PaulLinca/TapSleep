@@ -7,6 +7,7 @@ interface SoundPlayer {
     fun pause()
     fun resume()
     fun stop()
+    fun setVolume(volume: Float)
 }
 
 @Composable
