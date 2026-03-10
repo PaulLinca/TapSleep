@@ -8,45 +8,45 @@
     <path
         android:fillColor="#9B8FC4"
         android:pathData="
-        M34,10
-        C22,10 14,20 14,31
-        C14,42 22,52 34,52
-        C28,47 24,39 24,31
-        C24,23 28,15 34,10 Z"/>
+        M31,11
+        C19,11 11,21 11,32
+        C11,43 19,53 31,53
+        C25,48 21,40 21,32
+        C21,24 25,16 31,11 Z"/>
 
     <!-- Star dots forming mirrored crescent -->
     <path
         android:fillColor="#C8C0A8"
         android:fillAlpha="0.4"
-        android:pathData="M42,14 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0"/>
+        android:pathData="M39,15 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0"/>
 
     <path
         android:fillColor="#C8C0A8"
         android:fillAlpha="0.8"
-        android:pathData="M46,18 m-1,0 a1,1 0 1,0 2,0 a1,1 0 1,0 -2,0"/>
+        android:pathData="M43,19 m-1,0 a1,1 0 1,0 2,0 a1,1 0 1,0 -2,0"/>
 
     <path
         android:fillColor="#C8C0A8"
         android:fillAlpha="0.75"
-        android:pathData="M50,24 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0"/>
+        android:pathData="M47,25 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0"/>
 
     <path
         android:fillColor="#C8C0A8"
         android:fillAlpha="0.65"
-        android:pathData="M52,31 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0"/>
+        android:pathData="M49,32 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0"/>
 
     <path
         android:fillColor="#C8C0A8"
         android:fillAlpha="0.8"
-        android:pathData="M50,38 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0"/>
+        android:pathData="M47,39 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0"/>
 
     <path
         android:fillColor="#C8C0A8"
         android:fillAlpha="0.6"
-        android:pathData="M46,44 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0"/>
+        android:pathData="M43,45 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0"/>
 
     <path
         android:fillColor="#C8C0A8"
         android:fillAlpha="1"
-        android:pathData="M42,48 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0"/>
+        android:pathData="M39,49 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0"/>
 </vector>

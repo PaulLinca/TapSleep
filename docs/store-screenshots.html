@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TapSleep — Store Screenshots (1080×1920)</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #06080f;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+.row {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+/* ── Each slide is 1080×1920 displayed at 45% ───────────────────────────── */
+.slide-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.slide-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(107,125,179,0.5);
+  letter-spacing: 0.14em;
+}
+
+.slide {
+  width: 1080px;
+  height: 1920px;
+  transform-origin: top left;
+  transform: scale(0.45);
+  margin-bottom: calc(1920px * -0.55); /* collapse transformed height */
+  margin-right: calc(1080px * -0.55);
+  background: #0a0d1a;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* ── Stars ──────────────────────────────────────────────────────────────── */
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Glows (unique per slide via class) ─────────────────────────────────── */
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.slide-1 .glow-a {
+  width: 900px; height: 900px; top: -200px; right: -100px;
+  background: radial-gradient(circle, rgba(155,143,196,0.18) 0%, transparent 65%);
+}
+.slide-2 .glow-a {
+  width: 800px; height: 800px; top: 100px; left: 50%; transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(126,184,196,0.13) 0%, transparent 65%);
+}
+.slide-3 .glow-a {
+  width: 900px; height: 900px; top: -150px; left: -150px;
+  background: radial-gradient(circle, rgba(155,143,196,0.16) 0%, transparent 65%);
+}
+.slide-4 .glow-a {
+  width: 800px; height: 800px; bottom: -100px; right: -100px;
+  background: radial-gradient(circle, rgba(107,125,179,0.14) 0%, transparent 65%);
+}
+
+/* ── Top branding strip ─────────────────────────────────────────────────── */
+.top-brand {
+  position: absolute;
+  top: 80px;
+  left: 0; right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  z-index: 10;
+}
+.brand-mark {
+  width: 52px; height: 52px;
+}
+/* Inline SVG moon mark */
+
+.brand-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0.28em;
+  color: rgba(200,192,168,0.35);
+  text-transform: uppercase;
+  margin-top: 14px;
+}
+
+/* ── Headline ────────────────────────────────────────────────────────────── */
+.headline-wrap {
+  position: absolute;
+  top: 240px;
+  left: 0; right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 80px;
+  z-index: 10;
+}
+.headline {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 100px;
+  font-style: italic;
+  font-weight: 300;
+  color: #e8e4d8;
+  line-height: 1.08;
+  letter-spacing: -1px;
+}
+.headline em {
+  color: #9b8fc4;
+  font-style: italic;
+}
+.subhead {
+  margin-top: 28px;
+  font-family: 'DM Mono', monospace;
+  font-size: 21px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: rgba(107,125,179,0.75);
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+/* ── Phone frame ─────────────────────────────────────────────────────────── */
+.phone-frame {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 548px;
+  height: 1188px;   /* ~9:19.5 — covers most modern Android phones */
+  border-radius: 52px;
+  overflow: hidden;
+  border: 2px solid rgba(155,143,196,0.22);
+  box-shadow:
+    0 48px 140px rgba(0,0,0,0.82),
+    0 0 0 1px rgba(255,255,255,0.04),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+  z-index: 8;
+}
+.phone-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Fade into background at top & bottom of phone */
+.phone-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(10,13,26,0.25) 0%, transparent 10%,
+                    transparent 88%, rgba(10,13,26,0.5) 100%);
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 52px;
+}
+
+/* ── Bottom fade into background ────────────────────────────────────────── */
+.bottom-fade {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 200px;
+  background: linear-gradient(to top, #0a0d1a 0%, transparent 100%);
+  z-index: 9;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!--  SLIDE 1 — Main screen                                                  -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="row">
+<div class="slide-wrap">
+  <div class="slide slide-1" id="slide-1">
+    <div class="glow glow-a"></div>
+
+    <div class="top-brand">
+      <svg class="brand-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M31,11 C19,11 11,21 11,32 C11,43 19,53 31,53 C25,48 21,40 21,32 C21,24 25,16 31,11 Z" fill="#9B8FC4"/>
+      </svg>
+      <div class="brand-name">TapSleep</div>
+    </div>
+
+    <div class="headline-wrap">
+      <div class="headline">Sleep sounds,<br><em>one tap</em> away.</div>
+      <div class="subhead">9 ambient sounds<br>to drift off to</div>
+    </div>
+
+    <div class="phone-frame">
+      <img src="./main_screen.png" alt="Main screen">
+    </div>
+    <div class="bottom-fade"></div>
+  </div>
+  <div class="slide-label">01 — 1080 × 1920 px</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!--  SLIDE 2 — Single player                                                -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="slide-wrap">
+  <div class="slide slide-2" id="slide-2">
+    <div class="glow glow-a"></div>
+
+    <div class="top-brand">
+      <svg class="brand-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M31,11 C19,11 11,21 11,32 C11,43 19,53 31,53 C25,48 21,40 21,32 C21,24 25,16 31,11 Z" fill="#9B8FC4"/>
+      </svg>
+      <div class="brand-name">TapSleep</div>
+    </div>
+
+    <div class="headline-wrap">
+      <div class="headline">Set a timer.<br><em>Sleep</em> deeply.</div>
+      <div class="subhead">Stops automatically<br>after 30m · 1h · 8h</div>
+    </div>
+
+    <div class="phone-frame">
+      <img src="./single_player_screen.png" alt="Player screen">
+    </div>
+    <div class="bottom-fade"></div>
+  </div>
+  <div class="slide-label">02 — 1080 × 1920 px</div>
+</div>
+</div>
+
+<div class="row">
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!--  SLIDE 3 — Blend screen                                                 -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="slide-wrap">
+  <div class="slide slide-3" id="slide-3">
+    <div class="glow glow-a"></div>
+
+    <div class="top-brand">
+      <svg class="brand-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M31,11 C19,11 11,21 11,32 C11,43 19,53 31,53 C25,48 21,40 21,32 C21,24 25,16 31,11 Z" fill="#9B8FC4"/>
+      </svg>
+      <div class="brand-name">TapSleep</div>
+    </div>
+
+    <div class="headline-wrap">
+      <div class="headline">Your mix.<br>Your <em>night</em>.</div>
+      <div class="subhead">Blend up to 3 sounds<br>for the perfect atmosphere</div>
+    </div>
+
+    <div class="phone-frame">
+      <img src="./blending_screen.png" alt="Blend screen">
+    </div>
+    <div class="bottom-fade"></div>
+  </div>
+  <div class="slide-label">03 — 1080 × 1920 px</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!--  SLIDE 4 — Blend player                                                 -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="slide-wrap">
+  <div class="slide slide-4" id="slide-4">
+    <div class="glow glow-a"></div>
+
+    <div class="top-brand">
+      <svg class="brand-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M31,11 C19,11 11,21 11,32 C11,43 19,53 31,53 C25,48 21,40 21,32 C21,24 25,16 31,11 Z" fill="#9B8FC4"/>
+      </svg>
+      <div class="brand-name">TapSleep</div>
+    </div>
+
+    <div class="headline-wrap">
+      <div class="headline">Fine-tune<br>every <em>layer</em>.</div>
+      <div class="subhead">Adjust each sound<br>independently</div>
+    </div>
+
+    <div class="phone-frame">
+      <img src="./blend_player_screen.png" alt="Blend player">
+    </div>
+    <div class="bottom-fade"></div>
+  </div>
+  <div class="slide-label">04 — 1080 × 1920 px</div>
+</div>
+</div>
+
+<div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(107,125,179,0.4);letter-spacing:0.12em;padding-bottom:40px;">
+  To export: DevTools → select .slide element → ⌘⇧P → "Capture node screenshot"
+</div>
+
+<script>
+function lcg(seed) {
+  return function() {
+    seed = (seed * 1664525 + 1013904223) & 0xffffffff;
+    return (seed >>> 0) / 0xffffffff;
+  };
+}
+
+['slide-1','slide-2','slide-3','slide-4'].forEach((id, si) => {
+  const slide = document.getElementById(id);
+  const rr = lcg(0xDEAD0000 + si * 0x1234);
+  for (let i = 0; i < 110; i++) {
+    const x = rr() * 100;
+    const y = rr() * 100;
+    const rv = rr();
+    const size = rv < 0.62 ? 1 : rv < 0.87 ? 2 : 3;
+    const opacity = 0.06 + rr() * 0.50;
+    // fewer stars over the phone area (bottom 65% center strip)
+    if (x > 20 && x < 80 && y > 40 && opacity > 0.3) continue;
+    const el = document.createElement('div');
+    el.className = 'star';
+    el.style.cssText = `left:${x.toFixed(2)}%;top:${y.toFixed(2)}%;width:${size}px;height:${size}px;opacity:${opacity.toFixed(2)};`;
+    slide.appendChild(el);
+  }
+});
+</script>
+</body>
+</html>

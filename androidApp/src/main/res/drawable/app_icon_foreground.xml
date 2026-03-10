@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- TapSleep moon mark — mirrors the brand identity SVG (64×64 viewBox) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+  <group android:scaleX="0.65"
+      android:scaleY="0.65"
+      android:translateX="11.2"
+      android:translateY="11.2"><!-- Moon -->
+      <path
+          android:fillColor="#9B8FC4"
+          android:pathData="
+          M31,11
+          C19,11 11,21 11,32
+          C11,43 19,53 31,53
+          C25,48 21,40 21,32
+          C21,24 25,16 31,11 Z"/>
+
+      <!-- Star dots forming mirrored crescent -->
+      <path
+          android:fillColor="#C8C0A8"
+          android:fillAlpha="0.4"
+          android:pathData="M39,15 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0"/>
+
+      <path
+          android:fillColor="#C8C0A8"
+          android:fillAlpha="0.8"
+          android:pathData="M43,19 m-1,0 a1,1 0 1,0 2,0 a1,1 0 1,0 -2,0"/>
+
+      <path
+          android:fillColor="#C8C0A8"
+          android:fillAlpha="0.75"
+          android:pathData="M47,25 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0"/>
+
+      <path
+          android:fillColor="#C8C0A8"
+          android:fillAlpha="0.65"
+          android:pathData="M49,32 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0"/>
+
+      <path
+          android:fillColor="#C8C0A8"
+          android:fillAlpha="0.8"
+          android:pathData="M47,39 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0"/>
+
+      <path
+          android:fillColor="#C8C0A8"
+          android:fillAlpha="0.6"
+          android:pathData="M43,45 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0"/>
+
+      <path
+          android:fillColor="#C8C0A8"
+          android:fillAlpha="1"
+          android:pathData="M39,49 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0"/>
+  </group>
+</vector>

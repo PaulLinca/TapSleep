@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+  <group android:scaleX="1.01"
+      android:scaleY="1.01"
+      android:translateX="-0.54"
+      android:translateY="-0.54">
+
+      <!-- Layer 1: Night background #0A0D1A -->
+      <path
+          android:pathData="M0,0 L108,0 L108,108 L0,108 Z"
+          android:fillColor="#0A0D1A" />
+
+      <!-- Layer 2: Lavender radial glow — 15% alpha, centre 40%/30% of 108 = (43,32), radius 65 -->
+      <path
+          android:pathData="M0,0 L108,0 L108,108 L0,108 Z">
+          <aapt:attr name="android:fillColor">
+              <gradient
+                  android:type="radial"
+                  android:centerX="43"
+                  android:centerY="32"
+                  android:gradientRadius="65"
+                  android:startColor="#269B8FC4"
+                  android:endColor="#009B8FC4" />
+          </aapt:attr>
+      </path>
+
+      <!-- Layer 3: MoonGlow inset highlight along top edge (#C8C0A8 at 10%) -->
+      <path
+          android:pathData="M0,0 L108,0 L108,1 L0,1 Z"
+          android:fillColor="#1AC8C0A8" />
+
+  </group>
+</vector>

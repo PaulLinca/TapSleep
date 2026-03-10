@@ -104,14 +104,7 @@ fun TapSleepLogoStacked(
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         TapSleepLogoMark(size = iconSize)
-        Text(
-            text = "TAPSLEEP",
-            style = MaterialTheme.typography.headlineMedium.copy(
-                letterSpacing = 6.sp,
-                fontStyle = FontStyle.Normal,
-            ),
-            color = Moon,
-        )
+        TapSleepWordmark()
         if (showTagline) {
             Text(
                 text = "sleep sounds",
