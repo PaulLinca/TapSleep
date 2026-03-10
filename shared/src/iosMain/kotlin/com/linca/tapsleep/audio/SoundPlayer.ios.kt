@@ -11,6 +11,8 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import platform.AVFAudio.AVAudioPlayer
+import platform.AVFAudio.AVAudioSession
+import platform.AVFAudio.AVAudioSessionCategoryPlayback
 import platform.Foundation.NSBundle
 
 private const val CROSSFADE_SECS = 2.5
@@ -22,10 +24,13 @@ private class IosSoundPlayer : SoundPlayer {
     private var playerB: AVAudioPlayer? = null
     private var scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var targetVolume = 1f
+    private var isPaused = false
 
     override fun play(audioId: String) {
         stop()
+        isPaused = false
         scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+        AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error = null)
         val url = NSBundle.mainBundle.URLForResource(audioId, withExtension = "mp3") ?: return
         playerA = AVAudioPlayer(contentsOfURL = url, error = null).apply {
             numberOfLoops = 0L
@@ -42,10 +47,11 @@ private class IosSoundPlayer : SoundPlayer {
             val duration = current.duration.takeIf { it > 0 } ?: return
             val fadeStart = duration - CROSSFADE_SECS
 
-            while (current.playing && current.currentTime < fadeStart) {
+            // Wait until near the end, treating paused as still-alive
+            while (current.currentTime < fadeStart) {
                 delay(80)
+                if (!current.playing && !isPaused) return // stopped externally
             }
-            if (!current.playing) return
 
             val url = NSBundle.mainBundle.URLForResource(audioId, withExtension = "mp3") ?: return
             val incoming = AVAudioPlayer(contentsOfURL = url, error = null).apply {
@@ -72,11 +78,13 @@ private class IosSoundPlayer : SoundPlayer {
     }
 
     override fun pause() {
+        isPaused = true
         playerA?.pause()
         playerB?.pause()
     }
 
     override fun resume() {
+        isPaused = false
         playerA?.play()
         playerB?.play()
     }
@@ -87,6 +95,7 @@ private class IosSoundPlayer : SoundPlayer {
     }
 
     override fun stop() {
+        isPaused = false
         scope.cancel()
         playerA?.stop(); playerA = null
         playerB?.stop(); playerB = null

@@ -35,7 +35,8 @@
       "Bash(/Users/ptudor01/Library/Python/3.9/bin/ffmpeg-normalize brown.mp3 pink.mp3 white.mp3 fire.mp3 rain.mp3 ocean.mp3 forest.mp3 wind.mp3 thunder.mp3 -o brown.mp3 pink.mp3 white.mp3 fire.mp3 rain.mp3 ocean.mp3 forest.mp3 wind.mp3 thunder.mp3 --target-level -23 -f -ext mp3 2>&1)",
       "Bash(/Users/ptudor01/Library/Python/3.9/bin/ffmpeg-normalize brown.mp3 pink.mp3 white.mp3 fire.mp3 rain.mp3 ocean.mp3 forest.mp3 wind.mp3 thunder.mp3 -o brown.mp3 pink.mp3 white.mp3 fire.mp3 rain.mp3 ocean.mp3 forest.mp3 wind.mp3 thunder.mp3 --target-level -23 -f -c:a libmp3lame -b:a 128k 2>&1)",
       "Bash(/Users/ptudor01/Library/Python/3.9/bin/ffmpeg-normalize brown.mp3 pink.mp3 white.mp3 fire.mp3 rain.mp3 ocean.mp3 forest.mp3 wind.mp3 thunder.mp3 -o brown.mp3 pink.mp3 white.mp3 fire.mp3 rain.mp3 ocean.mp3 forest.mp3 wind.mp3 thunder.mp3 --target-level -23 -f -c:a libmp3lame -b:a 128k --lra 18 --keep-loudness-range-target -ar 48000 2>&1)",
-      "Bash(cd /Users/ptudor01/AndroidStudioProjects/TapSleep && ./gradlew :shared:compileDebugKotlinAndroid 2>&1 | tail -20)"
+      "Bash(cd /Users/ptudor01/AndroidStudioProjects/TapSleep && ./gradlew :shared:compileDebugKotlinAndroid 2>&1 | tail -20)",
+      "Bash(./gradlew :shared:compileDebugKotlinAndroid 2>&1 | tail -5)"
     ]
   }
 }

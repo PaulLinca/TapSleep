@@ -1,11 +1,15 @@
 package com.linca.tapsleep.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.linca.tapsleep.audio.rememberSoundPlayer
 import com.linca.tapsleep.ui.theme.Dusk
@@ -49,7 +54,7 @@ fun BlendPlayerScreen(sounds: List<Sound>, onBack: () -> Unit) {
         extraContent = {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 sounds.forEachIndexed { i, sound ->
                     Row(
@@ -60,13 +65,13 @@ fun BlendPlayerScreen(sounds: List<Sound>, onBack: () -> Unit) {
                         Icon(
                             imageVector = sound.icon,
                             contentDescription = sound.name,
-                            tint = sound.tint.copy(alpha = 0.8f),
-                            modifier = Modifier.size(16.dp),
+                            tint = sound.tint.copy(alpha = 0.7f),
+                            modifier = Modifier.size(14.dp),
                         )
                         Text(
                             sound.name,
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MoonGlow.copy(alpha = 0.6f),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MoonGlow.copy(alpha = 0.5f),
                             modifier = Modifier.width(56.dp),
                         )
                         Slider(
@@ -75,12 +80,30 @@ fun BlendPlayerScreen(sounds: List<Sound>, onBack: () -> Unit) {
                                 volumes[i].value = v
                                 players[i].setVolume(v)
                             },
-                            modifier = Modifier.weight(1f),
-                            colors = SliderDefaults.colors(
-                                thumbColor = sound.tint,
-                                activeTrackColor = sound.tint.copy(alpha = 0.75f),
-                                inactiveTrackColor = Dusk.copy(alpha = 0.25f),
-                            ),
+                            modifier = Modifier.weight(1f).height(28.dp),
+                            thumb = {
+                                Box(
+                                    modifier = Modifier.size(15.dp),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    Box(
+                                        Modifier
+                                            .size(10.dp)
+                                            .clip(CircleShape)
+                                            .background(sound.tint),
+                                    )
+                                }
+                            },
+                            track = { sliderState ->
+                                SliderDefaults.Track(
+                                    sliderState = sliderState,
+                                    modifier = Modifier.height(4.dp),
+                                    colors = SliderDefaults.colors(
+                                        activeTrackColor = sound.tint.copy(alpha = 0.7f),
+                                        inactiveTrackColor = Dusk.copy(alpha = 0.2f),
+                                    ),
+                                )
+                            },
                         )
                     }
                 }

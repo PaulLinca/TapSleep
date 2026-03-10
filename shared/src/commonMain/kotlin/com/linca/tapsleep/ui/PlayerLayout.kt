@@ -285,7 +285,7 @@ fun PlayerLayout(
                 }
 
                 if (extraContent != null) {
-                    Spacer(Modifier.height(24.dp))
+                    Spacer(Modifier.height(36.dp))
                     extraContent()
                 }
             }
