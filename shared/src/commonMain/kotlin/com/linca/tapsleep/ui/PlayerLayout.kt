@@ -153,7 +153,6 @@ fun PlayerLayout(
                 modifier = Modifier.align(Alignment.Center),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                // Sound header — single or blend
                 if (sounds.size == 1) {
                     val sound = sounds[0]
                     Icon(
@@ -189,7 +188,6 @@ fun PlayerLayout(
 
                 Spacer(Modifier.height(70.dp))
 
-                // Orb
                 Box(contentAlignment = Alignment.Center) {
                     Box(
                         modifier = Modifier
@@ -254,7 +252,6 @@ fun PlayerLayout(
 
                 Spacer(Modifier.height(28.dp))
 
-                // ── Timer picker + extra ─────────────────────────────────────
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     listOf(
                         TimerPreset.MIN_30,

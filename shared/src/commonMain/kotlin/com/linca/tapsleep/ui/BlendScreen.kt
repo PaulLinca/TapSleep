@@ -37,14 +37,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.linca.tapsleep.ui.theme.AuroraPale
+import com.linca.tapsleep.ui.theme.Deep
 import com.linca.tapsleep.ui.theme.Dusk
 import com.linca.tapsleep.ui.theme.Lavender
 import com.linca.tapsleep.ui.theme.LavenderPale
-import com.linca.tapsleep.ui.theme.Deep
 import com.linca.tapsleep.ui.theme.Moon
 import com.linca.tapsleep.ui.theme.MoonGlow
 import com.linca.tapsleep.ui.theme.Night
@@ -57,7 +56,6 @@ fun BlendScreen(
     onPlay: (List<Sound>) -> Unit,
     onBack: () -> Unit,
 ) {
-    // Up to 3 slots, each holds a Sound or null
     var slots by remember { mutableStateOf(listOf<Sound?>(null, null, null)) }
     val selectedSounds = slots.filterNotNull()
     val canPlay = selectedSounds.size >= 2
@@ -65,10 +63,8 @@ fun BlendScreen(
     fun toggle(sound: Sound) {
         val idx = slots.indexOf(sound)
         if (idx >= 0) {
-            // already in a slot — remove it
             slots = slots.toMutableList().also { it[idx] = null }
         } else {
-            // add to first empty slot (if any)
             val emptyIdx = slots.indexOf(null)
             if (emptyIdx >= 0) {
                 slots = slots.toMutableList().also { it[emptyIdx] = sound }
@@ -78,124 +74,124 @@ fun BlendScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         StarfieldBackground(Modifier.fillMaxSize())
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .safeDrawingPadding()
-            .padding(horizontal = 24.dp),
-    ) {
-        Spacer(Modifier.height(20.dp))
-
-        // ── Top bar ───────────────────────────────────────────────────────────
-        Box(modifier = Modifier.fillMaxWidth()) {
-            BackButton(onClick = onBack, modifier = Modifier.align(Alignment.CenterStart))
-        }
-
-        Spacer(Modifier.height(24.dp))
-
-        // ── Title ─────────────────────────────────────────────────────────────
-        Text(
-            "Your Mix.",
-            style = MaterialTheme.typography.headlineLarge,
-            color = MoonGlow,
-        )
-        Spacer(Modifier.height(6.dp))
-        Text(
-            "BLEND UP TO 3 SOUNDS",
-            style = MaterialTheme.typography.labelLarge,
-            color = Dusk,
-        )
-
-        Spacer(Modifier.height(32.dp))
-
-        // ── 3 mix slots ───────────────────────────────────────────────────────
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            slots.forEachIndexed { index, sound ->
-                MixSlot(
-                    sound = sound,
-                    modifier = Modifier.weight(1f),
-                    onRemove = {
-                        slots = slots.toMutableList().also { it[index] = null }
-                    },
-                )
-            }
-        }
-
-        Spacer(Modifier.height(40.dp))
-
-        Text(
-            "SOUNDS",
-            style = MaterialTheme.typography.labelLarge,
-            color = Dusk,
-        )
-
-        Spacer(Modifier.height(12.dp))
-
-        // ── Sound picker grid ─────────────────────────────────────────────────
         Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .safeDrawingPadding()
+                .padding(horizontal = 24.dp),
         ) {
-            sounds.chunked(3).forEach { row ->
-                Row(
-                    modifier = Modifier.weight(1f).fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    row.forEach { sound ->
-                        val isSelected = sound in slots
-                        val isFull = slots.none { it == null } && !isSelected
-                        BlendSoundButton(
-                            sound = sound,
-                            isSelected = isSelected,
-                            enabled = !isFull,
-                            onClick = { toggle(sound) },
-                            modifier = Modifier.weight(1f).fillMaxSize(),
-                        )
+            Spacer(Modifier.height(20.dp))
+
+            // ── Top bar ───────────────────────────────────────────────────────────
+            Box(modifier = Modifier.fillMaxWidth()) {
+                BackButton(onClick = onBack, modifier = Modifier.align(Alignment.CenterStart))
+            }
+
+            Spacer(Modifier.height(24.dp))
+
+            // ── Title ─────────────────────────────────────────────────────────────
+            Text(
+                "Your Mix.",
+                style = MaterialTheme.typography.headlineLarge,
+                color = MoonGlow,
+            )
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "BLEND UP TO 3 SOUNDS",
+                style = MaterialTheme.typography.labelLarge,
+                color = Dusk,
+            )
+
+            Spacer(Modifier.height(32.dp))
+
+            // ── 3 mix slots ───────────────────────────────────────────────────────
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                slots.forEachIndexed { index, sound ->
+                    MixSlot(
+                        sound = sound,
+                        modifier = Modifier.weight(1f),
+                        onRemove = {
+                            slots = slots.toMutableList().also { it[index] = null }
+                        },
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(40.dp))
+
+            Text(
+                "SOUNDS",
+                style = MaterialTheme.typography.labelLarge,
+                color = Dusk,
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            // ── Sound picker grid ─────────────────────────────────────────────────
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                sounds.chunked(3).forEach { row ->
+                    Row(
+                        modifier = Modifier.weight(1f).fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        row.forEach { sound ->
+                            val isSelected = sound in slots
+                            val isFull = slots.none { it == null } && !isSelected
+                            BlendSoundButton(
+                                sound = sound,
+                                isSelected = isSelected,
+                                enabled = !isFull,
+                                onClick = { toggle(sound) },
+                                modifier = Modifier.weight(1f).fillMaxSize(),
+                            )
+                        }
                     }
                 }
             }
-        }
 
-        Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(24.dp))
 
-        // ── Play button ───────────────────────────────────────────────────────
-        val playScale by animateFloatAsState(
-            targetValue = if (canPlay) 1f else 0.96f,
-            animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
-            label = "playScale",
-        )
-        val playBrush = Brush.linearGradient(colors = listOf(LavenderPale, AuroraPale))
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(65.dp)
-                .graphicsLayer { scaleX = playScale; scaleY = playScale }
-                .clip(RoundedCornerShape(25.dp))
-                .drawBehind {
-                    drawRect(SlotBg)
-                    if (canPlay) drawRect(playBrush, alpha = 0.6f)
-                }
-                .border(
-                    1.dp,
-                    if (canPlay) Lavender.copy(alpha = 0.55f) else SlotBorder,
-                    RoundedCornerShape(25.dp),
-                )
-                .clickable(enabled = canPlay) { onPlay(selectedSounds) },
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                "Play Mix",
-                style = MaterialTheme.typography.labelLarge,
-                color = if (canPlay) Moon else MoonGlow.copy(alpha = 0.35f),
+            // ── Play button ───────────────────────────────────────────────────────
+            val playScale by animateFloatAsState(
+                targetValue = if (canPlay) 1f else 0.96f,
+                animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
+                label = "playScale",
             )
-        }
+            val playBrush = Brush.linearGradient(colors = listOf(LavenderPale, AuroraPale))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(65.dp)
+                    .graphicsLayer { scaleX = playScale; scaleY = playScale }
+                    .clip(RoundedCornerShape(25.dp))
+                    .drawBehind {
+                        drawRect(SlotBg)
+                        if (canPlay) drawRect(playBrush, alpha = 0.6f)
+                    }
+                    .border(
+                        1.dp,
+                        if (canPlay) Lavender.copy(alpha = 0.55f) else SlotBorder,
+                        RoundedCornerShape(25.dp),
+                    )
+                    .clickable(enabled = canPlay) { onPlay(selectedSounds) },
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    "Play Mix",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = if (canPlay) Moon else MoonGlow.copy(alpha = 0.35f),
+                )
+            }
 
-        Spacer(Modifier.height(30.dp))
-    } // Column
-    } // outer Box
+            Spacer(Modifier.height(30.dp))
+        }
+    }
 }
 
 @Composable
@@ -210,7 +206,7 @@ private fun MixSlot(
             .aspectRatio(1f)
             .clip(shape)
             .background(SlotBg)
-            .border(1.dp, if (sound != null) sound.tint.copy(alpha = 0.4f) else SlotBorder, shape),
+            .border(1.dp, sound?.tint?.copy(alpha = 0.4f) ?: SlotBorder, shape),
         contentAlignment = Alignment.Center,
     ) {
         if (sound == null) {
@@ -249,7 +245,6 @@ private fun MixSlot(
                     overflow = TextOverflow.Ellipsis,
                 )
             }
-            // Remove button — top-right corner
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -284,7 +279,10 @@ private fun BlendSoundButton(
 
     val glowProgress by animateFloatAsState(
         targetValue = if (isSelected) 1f else 0f,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessMedium),
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium
+        ),
         label = "glow",
     )
     val alpha = if (enabled || isSelected) 1f else 0.35f

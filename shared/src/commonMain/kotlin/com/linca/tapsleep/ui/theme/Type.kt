@@ -43,7 +43,6 @@ val DmMono = FontFamily.Monospace
 // Body / Label     → DM Mono Light — all UI metadata, tags, timers, labels
 
 val TapSleepTypography = Typography(
-    // ── Display ──────────────────────────────────────────────────────────────
     displayLarge = TextStyle(
         fontFamily = CormorantGaramond,
         fontWeight = FontWeight.Light,
@@ -65,7 +64,7 @@ val TapSleepTypography = Typography(
         letterSpacing = 0.sp,
         lineHeight = 44.sp,
     ),
-    // ── Headlines ────────────────────────────────────────────────────────────
+
     headlineLarge = TextStyle(
         fontFamily = CormorantGaramond,
         fontWeight = FontWeight.Light,
@@ -89,7 +88,7 @@ val TapSleepTypography = Typography(
         letterSpacing = 0.sp,
         lineHeight = 28.sp,
     ),
-    // ── Titles ───────────────────────────────────────────────────────────────
+
     titleLarge = TextStyle(
         fontFamily = CormorantGaramond,
         fontWeight = FontWeight.Light,
@@ -113,7 +112,7 @@ val TapSleepTypography = Typography(
         letterSpacing = 0.sp,
         lineHeight = 20.sp,
     ),
-    // ── Body — mono UI text ───────────────────────────────────────────────────
+
     bodyLarge = TextStyle(
         fontFamily = DmMono,
         fontWeight = FontWeight.Normal,
@@ -135,7 +134,7 @@ val TapSleepTypography = Typography(
         letterSpacing = 0.sp,
         lineHeight = 12.sp,
     ),
-    // ── Labels — metadata, tags, section markers ──────────────────────────────
+
     labelLarge = TextStyle(
         fontFamily = DmMono,
         fontWeight = FontWeight.Normal,

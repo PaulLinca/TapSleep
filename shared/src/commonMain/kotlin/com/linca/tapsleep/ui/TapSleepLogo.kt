@@ -27,10 +27,6 @@ import org.jetbrains.compose.resources.painterResource
 import tapsleep.shared.generated.resources.Res
 import tapsleep.shared.generated.resources.ic_tapsleep_moon
 
-// ─── Moon Mark ───────────────────────────────────────────────────────────────
-// Renders ic_tapsleep_moon.svg from compose resources — single source of truth
-// for the crescent shape across the app and launcher icons.
-
 @Composable
 fun TapSleepLogoMark(
     modifier: Modifier = Modifier,
@@ -42,9 +38,6 @@ fun TapSleepLogoMark(
         modifier = modifier.size(size),
     )
 }
-
-// ─── Wordmark ─────────────────────────────────────────────────────────────────
-// "Tap" in Moon white + "Sleep" in MoonGlow italic — brand identity spec
 
 @Composable
 fun TapSleepWordmark(
@@ -67,8 +60,6 @@ fun TapSleepWordmark(
     )
 }
 
-// ─── Full horizontal lockup ───────────────────────────────────────────────────
-
 @Composable
 fun TapSleepLogo(
     modifier: Modifier = Modifier,
@@ -89,8 +80,6 @@ fun TapSleepLogo(
         )
     }
 }
-
-// ─── Stacked lockup (used on splash screen) ───────────────────────────────────
 
 @Composable
 fun TapSleepLogoStacked(

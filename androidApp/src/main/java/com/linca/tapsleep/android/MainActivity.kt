@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
                         text = {
                             Text(
                                 "TapSleep shows a small notification while sounds are playing " +
-                                "so you can pause or stop from anywhere — even with the screen locked.",
+                                "so you can pause or stop from anywhere, even with the screen locked.",
                                 color = MoonGlow,
                                 fontSize = 15.sp,
                                 lineHeight = 22.sp,

@@ -8,78 +8,72 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 
-// ─── Color Schemes ───────────────────────────────────────────────────────────
 
 private val DarkColorScheme = darkColorScheme(
-    primary             = Lavender,
-    onPrimary           = Night,
-    primaryContainer    = IndigoDark,
-    onPrimaryContainer  = Moon,
-    secondary           = Aurora,
-    onSecondary         = Night,
-    secondaryContainer  = Indigo,
+    primary = Lavender,
+    onPrimary = Night,
+    primaryContainer = IndigoDark,
+    onPrimaryContainer = Moon,
+    secondary = Aurora,
+    onSecondary = Night,
+    secondaryContainer = Indigo,
     onSecondaryContainer = MoonWarm,
-    tertiary            = Sage,
-    onTertiary          = Night,
-    tertiaryContainer   = IndigoMid,
+    tertiary = Sage,
+    onTertiary = Night,
+    tertiaryContainer = IndigoMid,
     onTertiaryContainer = MoonGlow,
-    background          = Night,
-    onBackground        = Moon,
-    surface             = Deep,
-    onSurface           = Moon,
-    surfaceVariant      = IndigoDark,
-    onSurfaceVariant    = MoonGlow,
-    outline             = Dusk,
-    outlineVariant      = Slate,
-    inverseSurface      = Cream,
-    inverseOnSurface    = Midnight,
-    inversePrimary      = Indigo,
-    scrim               = Night,
+    background = Night,
+    onBackground = Moon,
+    surface = Deep,
+    onSurface = Moon,
+    surfaceVariant = IndigoDark,
+    onSurfaceVariant = MoonGlow,
+    outline = Dusk,
+    outlineVariant = Slate,
+    inverseSurface = Cream,
+    inverseOnSurface = Midnight,
+    inversePrimary = Indigo,
+    scrim = Night,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary             = Indigo,
-    onPrimary           = Cream,
-    primaryContainer    = LavenderPale,
-    onPrimaryContainer  = IndigoDark,
-    secondary           = Dusk,
-    onSecondary         = Cream,
-    secondaryContainer  = AuroraPale,
+    primary = Indigo,
+    onPrimary = Cream,
+    primaryContainer = LavenderPale,
+    onPrimaryContainer = IndigoDark,
+    secondary = Dusk,
+    onSecondary = Cream,
+    secondaryContainer = AuroraPale,
     onSecondaryContainer = Midnight,
-    tertiary            = Sage,
-    onTertiary          = Cream,
-    tertiaryContainer   = MoonWarm,
+    tertiary = Sage,
+    onTertiary = Cream,
+    tertiaryContainer = MoonWarm,
     onTertiaryContainer = IndigoDark,
-    background          = Cream,
-    onBackground        = Midnight,
-    surface             = MoonWarm,
-    onSurface           = Midnight,
-    surfaceVariant      = Moon,
-    onSurfaceVariant    = Slate,
-    outline             = Dusk,
-    outlineVariant      = MoonGlow,
-    inverseSurface      = IndigoDark,
-    inverseOnSurface    = Moon,
-    inversePrimary      = Lavender,
-    scrim               = Midnight,
+    background = Cream,
+    onBackground = Midnight,
+    surface = MoonWarm,
+    onSurface = Midnight,
+    surfaceVariant = Moon,
+    onSurfaceVariant = Slate,
+    outline = Dusk,
+    outlineVariant = MoonGlow,
+    inverseSurface = IndigoDark,
+    inverseOnSurface = Moon,
+    inversePrimary = Lavender,
+    scrim = Midnight,
 )
-
-// ─── Shapes ──────────────────────────────────────────────────────────────────
-// Soft, organic rounding to complement the serif aesthetic
 
 private val TapSleepShapes = Shapes(
-    extraSmall  = RoundedCornerShape(6.dp),
-    small       = RoundedCornerShape(10.dp),
-    medium      = RoundedCornerShape(14.dp),
-    large       = RoundedCornerShape(18.dp),
-    extraLarge  = RoundedCornerShape(28.dp),
+    extraSmall = RoundedCornerShape(6.dp),
+    small = RoundedCornerShape(10.dp),
+    medium = RoundedCornerShape(14.dp),
+    large = RoundedCornerShape(18.dp),
+    extraLarge = RoundedCornerShape(28.dp),
 )
-
-// ─── Theme ───────────────────────────────────────────────────────────────────
 
 @Composable
 fun TapSleepTheme(
-    darkTheme: Boolean = true,  // sleep app — dark by default
+    darkTheme: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     MaterialTheme(

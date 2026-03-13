@@ -17,10 +17,10 @@ import platform.AVFAudio.setActive
 import platform.Foundation.NSBundle
 import platform.Foundation.NSNumber
 import platform.Foundation.numberWithDouble
-import platform.MediaPlayer.MPMediaItemPropertyTitle
-import platform.MediaPlayer.MPNowPlayingInfoPropertyElapsedPlaybackTime
 import platform.MediaPlayer.MPMediaItemPropertyPlaybackDuration
+import platform.MediaPlayer.MPMediaItemPropertyTitle
 import platform.MediaPlayer.MPNowPlayingInfoCenter
+import platform.MediaPlayer.MPNowPlayingInfoPropertyElapsedPlaybackTime
 import platform.MediaPlayer.MPNowPlayingInfoPropertyPlaybackRate
 import platform.MediaPlayer.MPRemoteCommandCenter
 import platform.MediaPlayer.MPRemoteCommandHandlerStatusSuccess
@@ -118,8 +118,6 @@ private class IosSoundPlayer : SoundPlayer {
         playerB?.stop(); playerB = null
         clearRemoteControls()
     }
-
-    // ── Now Playing / Remote Controls ────────────────────────────────────────
 
     private var remoteControlsSetUp = false
 

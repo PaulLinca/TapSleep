@@ -21,8 +21,7 @@ private val SplashEaseOut = Easing { t -> 1f - (1f - t) * (1f - t) }
 
 @Composable
 fun SplashScreen(onFinished: () -> Unit) {
-    // Two-phase visibility: false → true (fade in) → false (fade out)
-    var phase by remember { mutableStateOf(0) }   // 0=invisible, 1=visible, 2=fading-out
+    var phase by remember { mutableStateOf(0) }   // 0 = invisible, 1 = visible, 2 = fading-out
 
     val alpha by animateFloatAsState(
         targetValue = if (phase == 1) 1f else 0f,
@@ -34,9 +33,9 @@ fun SplashScreen(onFinished: () -> Unit) {
     )
 
     LaunchedEffect(Unit) {
-        phase = 1          // fade in
+        phase = 1
         delay(2_400)
-        phase = 2          // fade out
+        phase = 2
         delay(750)
         onFinished()
     }
