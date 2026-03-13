@@ -42,11 +42,11 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.linca.tapsleep.ui.theme.DmMono
 import com.linca.tapsleep.ui.theme.Dusk
 import com.linca.tapsleep.ui.theme.Lavender
 import com.linca.tapsleep.ui.theme.Moon
 import com.linca.tapsleep.ui.theme.MoonGlow
+import com.linca.tapsleep.ui.theme.dmMonoFamily
 import kotlinx.coroutines.delay
 
 private val OrbCenter = Color(0x669B8FC4)
@@ -237,7 +237,7 @@ fun PlayerLayout(
                 Text(
                     timerDisplay,
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        fontFamily = DmMono,
+                        fontFamily = dmMonoFamily(),
                         fontSize = 32.sp,
                         letterSpacing = 1.5.sp,
                     ),
@@ -274,7 +274,7 @@ fun PlayerLayout(
                         ) {
                             Text(
                                 option.label,
-                                style = MaterialTheme.typography.labelLarge.copy(fontFamily = DmMono),
+                                style = MaterialTheme.typography.labelLarge.copy(fontFamily = dmMonoFamily()),
                                 color = if (selected) Lavender else Dusk.copy(alpha = 0.55f),
                             )
                         }

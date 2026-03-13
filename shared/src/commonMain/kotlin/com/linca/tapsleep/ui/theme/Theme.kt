@@ -78,7 +78,7 @@ fun TapSleepTheme(
 ) {
     MaterialTheme(
         colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme,
-        typography = TapSleepTypography,
+        typography = TapSleepTypography(),
         shapes = TapSleepShapes,
         content = content,
     )
