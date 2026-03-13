@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.linca.tapsleep.ui.theme.AuroraPale
 import com.linca.tapsleep.ui.theme.Deep
 import com.linca.tapsleep.ui.theme.Dusk
@@ -85,6 +86,7 @@ fun MainScreen(onSoundClick: (Sound) -> Unit = {}, onBlendClick: () -> Unit = {}
                 phrase,
                 style = MaterialTheme.typography.headlineLarge,
                 color = MoonGlow,
+                fontSize = 36.sp
             )
 
             Spacer(Modifier.height(10.dp))
