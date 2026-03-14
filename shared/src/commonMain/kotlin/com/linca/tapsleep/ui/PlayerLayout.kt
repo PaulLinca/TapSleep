@@ -132,9 +132,11 @@ fun PlayerLayout(
     val timerDisplay = when {
         preset == TimerPreset.NONE || secondsLeft == null -> "∞"
         else -> {
-            val m = secondsLeft!! / 60
+            val h = secondsLeft!! / 3600
+            val m = (secondsLeft!! % 3600) / 60
             val s = secondsLeft!! % 60
-            "$m:${s.toString().padStart(2, '0')}"
+            if (h > 0) "$h:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}"
+            else "$m:${s.toString().padStart(2, '0')}"
         }
     }
 
