@@ -10,6 +10,7 @@ import com.linca.tapsleep.ui.theme.TapSleepTheme
 private sealed interface Screen {
     data object Splash : Screen
     data object Picker : Screen
+    data object Info : Screen
     data object BlendPicker : Screen
     data class Player(val sound: Sound) : Screen
     data class BlendPlayer(val sounds: List<Sound>) : Screen
@@ -18,6 +19,7 @@ private sealed interface Screen {
 @Composable
 fun TapSleepRootScreen() {
     var screen by remember { mutableStateOf<Screen>(Screen.Splash) }
+    val requestReview = rememberReviewRequester()
 
     TapSleepTheme {
         PlatformBackHandler {
@@ -25,6 +27,7 @@ fun TapSleepRootScreen() {
                 is Screen.Player -> screen = Screen.Picker
                 is Screen.BlendPlayer -> screen = Screen.BlendPicker
                 is Screen.BlendPicker -> screen = Screen.Picker
+                is Screen.Info -> screen = Screen.Picker
                 else -> Unit
             }
         }
@@ -36,6 +39,11 @@ fun TapSleepRootScreen() {
             is Screen.Picker -> MainScreen(
                 onSoundClick = { sound -> screen = Screen.Player(sound) },
                 onBlendClick = { screen = Screen.BlendPicker },
+                onInfoClick = { screen = Screen.Info },
+            )
+            is Screen.Info -> InfoScreen(
+                onBack = { screen = Screen.Picker },
+                onReviewClick = requestReview,
             )
             is Screen.BlendPicker -> BlendScreen(
                 onPlay = { sounds -> screen = Screen.BlendPlayer(sounds) },

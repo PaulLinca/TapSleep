@@ -24,6 +24,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Bedtime
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -63,7 +65,11 @@ private val SoundBtnBorder = MoonGlow.copy(alpha = 0.4f)
 private val SoundBtnText = MoonGlow
 
 @Composable
-fun MainScreen(onSoundClick: (Sound) -> Unit = {}, onBlendClick: () -> Unit = {}) {
+fun MainScreen(
+    onSoundClick: (Sound) -> Unit = {},
+    onBlendClick: () -> Unit = {},
+    onInfoClick: () -> Unit = {},
+) {
     var selectedIndex by remember { mutableStateOf(-1) }
     val phrase = remember { calmingPhrases[Random.nextInt(calmingPhrases.size)] }
 
@@ -78,7 +84,7 @@ fun MainScreen(onSoundClick: (Sound) -> Unit = {}, onBlendClick: () -> Unit = {}
 
             Spacer(Modifier.height(30.dp))
 
-            TapSleepLogo(Modifier.align(alignment = Alignment.CenterHorizontally), fontSize = 24)
+            TapSleepLogo(Modifier.align(Alignment.CenterHorizontally), fontSize = 24)
 
             Spacer(Modifier.weight(0.5f))
 
@@ -136,6 +142,31 @@ fun MainScreen(onSoundClick: (Sound) -> Unit = {}, onBlendClick: () -> Unit = {}
             }
 
             Spacer(Modifier.weight(1f))
+
+            Column(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = onInfoClick,
+                    )
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Bedtime,
+                    contentDescription = "About",
+                    tint = Dusk.copy(alpha = 0.7f),
+                    modifier = Modifier.size(14.dp),
+                )
+                Text(
+                    "about TapSleep",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Dusk.copy(alpha = 0.7f),
+                )
+            }
         }
     }
 }

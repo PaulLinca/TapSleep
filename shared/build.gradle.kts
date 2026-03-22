@@ -35,6 +35,7 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
+            implementation("com.google.android.play:review-ktx:2.0.2")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
